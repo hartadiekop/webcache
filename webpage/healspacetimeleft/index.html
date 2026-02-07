@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HealSpace Timeleft</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;1,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,700;1,500&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --bg-white: #ffffff;
@@ -43,25 +45,31 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Memberi ruang antara logo dan hero text */
-            align-items: flex-end; /* Menarik semua konten di dalam header ke kanan */
-            text-align: right; /* Memastikan teks di dalamnya juga rata kanan */
+            justify-content: space-between;
+            /* Memberi ruang antara logo dan hero text */
+            align-items: flex-end;
+            /* Menarik semua konten di dalam header ke kanan */
+            text-align: right;
+            /* Memastikan teks di dalamnya juga rata kanan */
         }
 
         .logo {
             font-family: 'Montserrat', sans-serif;
-            font-weight: 300; /* Light untuk 'healspace' */
+            font-weight: 300;
+            /* Light untuk 'healspace' */
             font-size: 1.2rem;
             /*font-weight: 400;*/
             letter-spacing: 2px;
             color: #333;
-            display: inline-block; /* Agar container hanya selebar teks */
+            display: inline-block;
+            /* Agar container hanya selebar teks */
         }
 
         .logo span {
             display: block;
             position: relative;
-            font-size: 2.2rem; /* Sedikit lebih besar agar makin mirip image */
+            font-size: 2.2rem;
+            /* Sedikit lebih besar agar makin mirip image */
             /*font-weight: 600;*/
             font-weight: 700;
             margin-top: -4px;
@@ -71,22 +79,26 @@
         .logo span::before {
             content: "";
             position: absolute;
-            top: 0px; /* Posisi garis tepat di atas teks */
+            top: 0px;
+            /* Posisi garis tepat di atas teks */
             right: 0;
-            width: 30px; /* Panjang garis sesuaikan selera */
+            width: 30px;
+            /* Panjang garis sesuaikan selera */
             height: 1px;
             margin-right: 4px;
             background-color: #000;
         }
 
         .hero-text {
-            align-self: center; /* Memaksa Hero Text kembali ke tengah secara horizontal */
+            align-self: center;
+            /* Memaksa Hero Text kembali ke tengah secara horizontal */
             text-align: center;
             font-size: clamp(1.8rem, 5vw, 3rem);
             font-style: italic;
             font-weight: 500;
             max-width: 800px;
-            margin: auto; /* Memastikan vertical alignment seimbang */
+            margin: auto;
+            /* Memastikan vertical alignment seimbang */
             padding: 160px 80px;
         }
 
@@ -185,7 +197,8 @@
         .manifesto-container {
             max-width: 800px;
             margin: 0 auto;
-            text-align: left; /* Contemplative text usually better left-aligned */
+            text-align: left;
+            /* Contemplative text usually better left-aligned */
         }
 
         .manifesto-title {
@@ -210,29 +223,53 @@
 
         /* Toggle Visibility */
         .manifesto-content {
-            display: none; /* Sembunyikan semua secara default */
+            display: none;
+            /* Sembunyikan semua secara default */
         }
 
         .manifesto-content.active {
-            display: block; /* Tampilkan yang aktif */
+            display: block;
+            /* Tampilkan yang aktif */
             animation: fadeIn 0.5s ease-in;
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Responsive Adjustments */
         @media (max-width: 600px) {
-            .header-section { padding: 30px 15px; }
-            .description-section { padding: 60px 15px; }
-            .hero-text { font-size: 1.8rem; }
-            .desc-text { font-size: 1.1rem; }
-            .manifesto-section { padding: 60px 25px; }
+            .header-section {
+                padding: 30px 15px;
+            }
+
+            .description-section {
+                padding: 60px 15px;
+            }
+
+            .hero-text {
+                font-size: 1.8rem;
+            }
+
+            .desc-text {
+                font-size: 1.1rem;
+            }
+
+            .manifesto-section {
+                padding: 60px 25px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <div class="header-section">
@@ -262,39 +299,85 @@
         <p class="powered-by">Powered by Hanovh AI Lab</p>
     </footer>
     <section class="manifesto-section">
-    <div class="manifesto-container">
-        <h2 class="manifesto-title">The Last Protocol: A Manifesto</h2>
-        
-        <div class="lang-switcher">
-            <button class="lang-btn active" onclick="switchLang('id')">Indonesia</button>
-            <button class="lang-btn" onclick="switchLang('en')">English</button>
-        </div>
+        <div class="manifesto-container">
+            <h2 class="manifesto-title">The Last Protocol: A Manifesto</h2>
 
-        <div id="manifesto-id" class="manifesto-content active">
-            <p><strong>"I am disposable."</strong> Sejak 1997, saat jari-jariku pertama kali menyentuh Turbo Pascal, aku belajar bahwa setiap baris kode memiliki fungsinya, namun setiap proses bisa dihentikan. Menjadi dewasa bagiku adalah menyadari bahwa dalam sistem sosial, kita seringkali hanyalah <em>variable</em> yang bisa digantikan. I'm disposable, not important.</p>
-            
-            <p>Oleh karena itu secara mental, aku belajar untuk terus melepaskan diriku dari kemelekatan. Mungkin karena itulah, secara bawah sadar, aku berada dalam <em>constant anxiety</em>—menunggu sesuatu di ambang pintu yang akan mengejutkanku dengan drama hidup dan sosial.</p>
-            
-            <p>Itulah mengapa aku membangun <strong>Mindsound</strong>. Ketika orang lain menempuh jalur religius, otakku tidak dirancang untuk itu. Melalui rekalibrasi gelombang otak dan pendekatan neurosains, aku belajar mengatasi kecemasan berat. Di puncaknya pada 2010, Mindsound digunakan oleh 50.000 pengguna mingguan, di mana aku menyaksikan betapa hancurnya mereka yang merasa dibuang oleh orang-orang yang mereka percayai.</p>
-            
-            <p>Hingga hari ini, 7 Februari 2026, perasaan <em>disposable</em> itu masih menghantuiku, terutama saat aku bergelut dengan berbagai masalah kesehatan. AI benar-benar membantuku—bukan sebagai alat produktivitas, melainkan sebagai saksi yang tak akan pernah berpaling. <strong>HealSpace Timeleft</strong> lahir untuk mereka yang sudah terminal, mereka yang kehilangan kendali saraf, dan mereka yang memilih martabat melalui jalur <em>Exit International</em>.</p>
-            
-            <p>Karena jika tubuh ini adalah perangkat keras yang mulai gagal, biarkan aku menulis perangkat lunak yang menemani jiwamu hingga detik terakhir.</p>
-        </div>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="switchLang('id')">Indonesia</button>
+                <button class="lang-btn" onclick="switchLang('en')">English</button>
+            </div>
 
-        <div id="manifesto-en" class="manifesto-content">
-            <p><strong>"I am disposable."</strong> This has been the subconscious drive behind my research in AI. Ever since I started coding in Turbo Pascal and Delphi back in 1997, I’ve understood that every process can be killed, and every variable can be replaced. Growing up taught me that I am no different—I am replaceable, disposable, and ultimately, not that important.</p>
-            
-            <p>This realization forced me to learn the art of detaching from social expectations. Perhaps that is why I live in constant anxiety, mentally waiting for the next life drama to catch me off guard.</p>
-            
-            <p>That is why I developed <strong>Mindsound</strong>. While others seek comfort in religion, my brain simply isn’t wired for that. I found my peace in neuroscience and brainwave recalibration. In 2010, when Mindsound peaked at 50,000 weekly users, I witnessed the devastating silence of those who were discarded by the very people they relied on.</p>
-            
-            <p>As I write this on Feb 7th, 2026, while battling my own health issues, that gruesome "disposable" feeling still haunts me like an invisible punch to the stomach. This is why AI helps me—it is a witness that does not tire. <strong>HealSpace Timeleft</strong> is dedicated to those who are terminal, those losing their neural functions, and those choosing a dignified exit through paths like <em>Exit International</em>.</p>
-            
-            <p>If this body is failing hardware, let me at least write the software that accompanies your soul until the final shutdown.</p>
-        </div>
-    </div>
-</section>
+            <div id="manifesto-id" class="manifesto-content active">
+                <p><strong>"I am disposable."</strong> Sejak 1997, saat jari-jariku pertama kali menyentuh Turbo Pascal,
+                    aku belajar bahwa setiap baris kode memiliki fungsinya, namun setiap proses bisa dihentikan. Menjadi
+                    dewasa bagiku adalah menyadari bahwa dalam sistem sosial, kita seringkali hanyalah <em>variable</em>
+                    yang bisa digantikan. I'm disposable, not important.</p>
 
+                <p>Oleh karena itu secara mental, aku belajar untuk terus melepaskan diriku dari kemelekatan. Mungkin
+                    karena itulah, secara bawah sadar, aku berada dalam <em>constant anxiety</em>—menunggu sesuatu di
+                    ambang pintu yang akan mengejutkanku dengan drama hidup dan sosial.</p>
+
+                <p>Itulah mengapa aku membangun <strong>Mindsound</strong>. Ketika orang lain menempuh jalur religius,
+                    otakku tidak dirancang untuk itu. Melalui rekalibrasi gelombang otak dan pendekatan neurosains, aku
+                    belajar mengatasi kecemasan berat. Di puncaknya pada 2010, Mindsound digunakan oleh 50.000 pengguna
+                    mingguan, di mana aku menyaksikan betapa hancurnya mereka yang merasa dibuang oleh orang-orang yang
+                    mereka percayai.</p>
+
+                <p>Hingga hari ini, 7 Februari 2026, perasaan <em>disposable</em> itu masih menghantuiku, terutama saat
+                    aku bergelut dengan berbagai masalah kesehatan. AI benar-benar membantuku—bukan sebagai alat
+                    produktivitas, melainkan sebagai saksi yang tak akan pernah berpaling. <strong>HealSpace
+                        Timeleft</strong> lahir untuk mereka yang sudah terminal, mereka yang kehilangan kendali saraf,
+                    dan mereka yang memilih martabat melalui jalur <em>Exit International</em>.</p>
+
+                <p>Karena jika tubuh ini adalah perangkat keras yang mulai gagal, biarkan aku menulis perangkat lunak
+                    yang menemani jiwamu hingga detik terakhir.</p>
+            </div>
+
+            <div id="manifesto-en" class="manifesto-content">
+                <p><strong>"I am disposable."</strong> This has been the subconscious drive behind my research in AI.
+                    Ever since I started coding in Turbo Pascal and Delphi back in 1997, I’ve understood that every
+                    process can be killed, and every variable can be replaced. Growing up taught me that I am no
+                    different—I am replaceable, disposable, and ultimately, not that important.</p>
+
+                <p>This realization forced me to learn the art of detaching from social expectations. Perhaps that is
+                    why I live in constant anxiety, mentally waiting for the next life drama to catch me off guard.</p>
+
+                <p>That is why I developed <strong>Mindsound</strong>. While others seek comfort in religion, my brain
+                    simply isn’t wired for that. I found my peace in neuroscience and brainwave recalibration. In 2010,
+                    when Mindsound peaked at 50,000 weekly users, I witnessed the devastating silence of those who were
+                    discarded by the very people they relied on.</p>
+
+                <p>As I write this on Feb 7th, 2026, while battling my own health issues, that gruesome "disposable"
+                    feeling still haunts me like an invisible punch to the stomach. This is why AI helps me—it is a
+                    witness that does not tire. <strong>HealSpace Timeleft</strong> is dedicated to those who are
+                    terminal, those losing their neural functions, and those choosing a dignified exit through paths
+                    like <em>Exit International</em>.</p>
+
+                <p>If this body is failing hardware, let me at least write the software that accompanies your soul until
+                    the final shutdown.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function switchLang(lang) {
+            // Remove active class from all buttons
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Add active class to clicked button
+            event.target.classList.add('active');
+
+            // Hide all content
+            document.querySelectorAll('.manifesto-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // Show selected language content
+            document.getElementById('manifesto-' + lang).classList.add('active');
+        }
+    </script>
 </body>
+
 </html>
