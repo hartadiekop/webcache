@@ -12,8 +12,10 @@
             --bg-white: #ffffff;
             --bg-black: #000000;
             --bg-footer: #333333;
+            --bg-manifesto: #1a1a1a;
             --text-main: #000000;
             --text-light: #ffffff;
+            --text-muted: #b0b0b0;
             --font-family: 'Montserrat', sans-serif;
             /*--font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;*/
         }
@@ -26,7 +28,7 @@
 
         body {
             font-family: var(--font-family);
-            line-height: 1.6;
+            line-height: 1.8;
             background-color: var(--bg-white);
             color: var(--text-main);
             display: flex;
@@ -139,12 +141,47 @@
             letter-spacing: 2px;
         }
 
+/* Manifesto Section (The Deep Footer) */
+        .manifesto-section {
+            background-color: var(--bg-manifesto);
+            color: var(--text-muted);
+            padding: 80px 20px;
+            border-top: 1px solid #333;
+        }
+
+        .manifesto-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: left; /* Contemplative text usually better left-aligned */
+        }
+
+        .manifesto-title {
+            color: var(--text-light);
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .manifesto-content p {
+            margin-bottom: 25px;
+            font-size: 1rem;
+            font-weight: 300;
+            line-height: 1.9;
+        }
+
+        .manifesto-content strong {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+
         /* Responsive Adjustments */
         @media (max-width: 600px) {
             .header-section { padding: 30px 15px; }
             .description-section { padding: 60px 15px; }
             .hero-text { font-size: 1.8rem; }
             .desc-text { font-size: 1.1rem; }
+            .manifesto-section { padding: 60px 25px; }
         }
     </style>
 </head>
@@ -176,6 +213,22 @@
         <a href="https://www.timeleft.han.ovh" class="footer-link">AI Researcher :: Hartadi Pradigdo</a>
         <p class="powered-by">Powered by Hanovh AI Lab</p>
     </footer>
+    <section class="manifesto-section" style="visibility: hidden;">
+        <div class="manifesto-container">
+            <h2 class="manifesto-title">The Last Protocol: A Manifesto</h2>
+            <div class="manifesto-content">
+                <p><strong>"I am disposable."</strong> Sejak 1997, saat jari-jariku pertama kali menyentuh Turbo Pascal, aku belajar bahwa setiap baris kode memiliki fungsinya, namun setiap proses bisa dihentikan. Menjadi dewasa bagiku adalah menyadari bahwa dalam sistem sosial, kita seringkali hanyalah <em>variable</em> yang bisa digantikan. I'm disposable, not important.</p>
+                
+                <p>Oleh karena itu secara mental, aku belajar untuk terus melepaskan diriku dari kemelekatan. Mungkin karena itulah, secara bawah sadar, aku berada dalam <em>constant anxiety</em>—menunggu sesuatu di ambang pintu yang akan mengejutkanku dengan drama hidup dan sosial.</p>
+                
+                <p>Itulah mengapa aku membangun <strong>Mindsound</strong>. Ketika orang lain menempuh jalur religius, otakku tidak dirancang untuk itu. Melalui rekalibrasi gelombang otak dan pendekatan neurosains, aku belajar mengatasi kecemasan berat. Di puncaknya pada 2010, Mindsound digunakan oleh 50.000 pengguna mingguan, di mana aku menyaksikan betapa hancurnya mereka yang merasa dibuang oleh orang-orang yang mereka percayai.</p>
+                
+                <p>Hingga hari ini, 7 Februari 2026, perasaan <em>disposable</em> itu masih menghantuiku, terutama saat aku bergelut dengan berbagai masalah kesehatan. AI benar-benar membantuku—bukan sebagai alat produktivitas, melainkan sebagai saksi yang tak akan pernah berpaling. <strong>HealSpace Timeleft</strong> lahir untuk mereka yang sudah terminal, mereka yang kehilangan kendali saraf, dan mereka yang memilih martabat melalui jalur <em>Exit International</em>.</p>
+                
+                <p>Karena jika tubuh ini adalah perangkat keras yang mulai gagal, biarkan aku menulis perangkat lunak yang menemani jiwamu hingga detik terakhir.</p>
+            </div>
+        </div>
+    </section>
 
 </body>
 </html>
