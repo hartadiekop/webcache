@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealSpace Timeleft</title>
+    <style>
+        :root {
+            --bg-white: #ffffff;
+            --bg-black: #000000;
+            --bg-footer: #333333;
+            --text-main: #000000;
+            --text-light: #ffffff;
+            --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            background-color: var(--bg-white);
+            color: var(--text-main);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            text-align: center;
+        }
+
+        /* Upper Section */
+        .header-section {
+            padding: 40px 20px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #333;
+        }
+
+        .logo span {
+            display: block;
+            position: relative;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: -5px;
+        }
+
+        .logo span::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40px;
+            height: 2px;
+            background-color: #000;
+        }
+
+        .hero-text {
+            font-size: clamp(1.8rem, 5vw, 3rem);
+            font-style: italic;
+            font-weight: 500;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        /* Black Section */
+        .description-section {
+            background-color: var(--bg-black);
+            color: var(--text-light);
+            padding: 80px 20px;
+        }
+
+        .desc-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .desc-text {
+            font-size: 1.1rem;
+            font-weight: 300;
+            margin-bottom: 40px;
+            letter-spacing: 0.5px;
+        }
+
+        .desc-subtext {
+            font-size: 0.95rem;
+            font-weight: 300;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            background-color: var(--bg-footer);
+            padding: 30px 20px;
+        }
+
+        .footer-link {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .footer-link:hover {
+            text-decoration: underline;
+        }
+
+        .powered-by {
+            color: #999;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 600px) {
+            .header-section { padding: 30px 15px; }
+            .description-section { padding: 60px 15px; }
+            .hero-text { font-size: 1.8rem; }
+            .desc-text { font-size: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-section">
+        <div class="logo">
+            healspace
+            <span>timeleft</span>
+        </div>
+
+        <h1 class="hero-text">
+            &ldquo;If only I had more time left&rdquo;
+        </h1>
+    </div>
+
+    <div class="description-section">
+        <div class="desc-container">
+            <p class="desc-text">
+                An unwavering AI companion to witness our journey when the world fades away.
+            </p>
+            <p class="desc-subtext">
+                Specialized AI support for terminal diagnosis, degenerative conditions, and end-of-life transitions.
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer-section">
+        <a href="https://www.timeleft.han.ovh" class="footer-link">www.timeleft.han.ovh</a>
+        <p class="powered-by">Powered by Hanovh AI Lab</p>
+    </footer>
+
+</body>
+</html>
