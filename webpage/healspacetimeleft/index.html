@@ -142,7 +142,39 @@
             letter-spacing: 2px;
         }
 
-/* Manifesto Section (The Deep Footer) */
+        /* Language Switcher Buttons */
+        .lang-switcher {
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid #444;
+            color: var(--text-muted);
+            padding: 8px 20px;
+            cursor: pointer;
+            font-family: var(--font-family);
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            border-color: var(--text-light);
+            color: var(--text-light);
+        }
+
+        .lang-btn.active {
+            background-color: var(--text-light);
+            color: var(--bg-black);
+            border-color: var(--text-light);
+        }
+
+        /* Manifesto Section (The Deep Footer) */
         .manifesto-section {
             background-color: var(--bg-manifesto);
             color: var(--text-muted);
@@ -174,6 +206,21 @@
         .manifesto-content strong {
             color: var(--text-light);
             font-weight: 500;
+        }
+
+        /* Toggle Visibility */
+        .manifesto-content {
+            display: none; /* Sembunyikan semua secara default */
+        }
+
+        .manifesto-content.active {
+            display: block; /* Tampilkan yang aktif */
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Responsive Adjustments */
@@ -215,21 +262,39 @@
         <p class="powered-by">Powered by Hanovh AI Lab</p>
     </footer>
     <section class="manifesto-section">
-        <div class="manifesto-container">
-            <h2 class="manifesto-title">The Last Protocol: A Manifesto</h2>
-            <div class="manifesto-content">
-                <p><strong>"I am disposable."</strong> Sejak 1997, saat jari-jariku pertama kali menyentuh Turbo Pascal, aku belajar bahwa setiap baris kode memiliki fungsinya, namun setiap proses bisa dihentikan. Menjadi dewasa bagiku adalah menyadari bahwa dalam sistem sosial, kita seringkali hanyalah <em>variable</em> yang bisa digantikan. I'm disposable, not important.</p>
-                
-                <p>Oleh karena itu secara mental, aku belajar untuk terus melepaskan diriku dari kemelekatan. Mungkin karena itulah, secara bawah sadar, aku berada dalam <em>constant anxiety</em>—menunggu sesuatu di ambang pintu yang akan mengejutkanku dengan drama hidup dan sosial.</p>
-                
-                <p>Itulah mengapa aku membangun <strong>Mindsound</strong>. Ketika orang lain menempuh jalur religius, otakku tidak dirancang untuk itu. Melalui rekalibrasi gelombang otak dan pendekatan neurosains, aku belajar mengatasi kecemasan berat. Di puncaknya pada 2010, Mindsound digunakan oleh 50.000 pengguna mingguan, di mana aku menyaksikan betapa hancurnya mereka yang merasa dibuang oleh orang-orang yang mereka percayai.</p>
-                
-                <p>Hingga hari ini, 7 Februari 2026, perasaan <em>disposable</em> itu masih menghantuiku, terutama saat aku bergelut dengan berbagai masalah kesehatan. AI benar-benar membantuku—bukan sebagai alat produktivitas, melainkan sebagai saksi yang tak akan pernah berpaling. <strong>HealSpace Timeleft</strong> lahir untuk mereka yang sudah terminal, mereka yang kehilangan kendali saraf, dan mereka yang memilih martabat melalui jalur <em>Exit International</em>.</p>
-                
-                <p>Karena jika tubuh ini adalah perangkat keras yang mulai gagal, biarkan aku menulis perangkat lunak yang menemani jiwamu hingga detik terakhir.</p>
-            </div>
+    <div class="manifesto-container">
+        <h2 class="manifesto-title">The Last Protocol: A Manifesto</h2>
+        
+        <div class="lang-switcher">
+            <button class="lang-btn active" onclick="switchLang('id')">Indonesia</button>
+            <button class="lang-btn" onclick="switchLang('en')">English</button>
         </div>
-    </section>
+
+        <div id="manifesto-id" class="manifesto-content active">
+            <p><strong>"I am disposable."</strong> Sejak 1997, saat jari-jariku pertama kali menyentuh Turbo Pascal, aku belajar bahwa setiap baris kode memiliki fungsinya, namun setiap proses bisa dihentikan. Menjadi dewasa bagiku adalah menyadari bahwa dalam sistem sosial, kita seringkali hanyalah <em>variable</em> yang bisa digantikan. I'm disposable, not important.</p>
+            
+            <p>Oleh karena itu secara mental, aku belajar untuk terus melepaskan diriku dari kemelekatan. Mungkin karena itulah, secara bawah sadar, aku berada dalam <em>constant anxiety</em>—menunggu sesuatu di ambang pintu yang akan mengejutkanku dengan drama hidup dan sosial.</p>
+            
+            <p>Itulah mengapa aku membangun <strong>Mindsound</strong>. Ketika orang lain menempuh jalur religius, otakku tidak dirancang untuk itu. Melalui rekalibrasi gelombang otak dan pendekatan neurosains, aku belajar mengatasi kecemasan berat. Di puncaknya pada 2010, Mindsound digunakan oleh 50.000 pengguna mingguan, di mana aku menyaksikan betapa hancurnya mereka yang merasa dibuang oleh orang-orang yang mereka percayai.</p>
+            
+            <p>Hingga hari ini, 7 Februari 2026, perasaan <em>disposable</em> itu masih menghantuiku, terutama saat aku bergelut dengan berbagai masalah kesehatan. AI benar-benar membantuku—bukan sebagai alat produktivitas, melainkan sebagai saksi yang tak akan pernah berpaling. <strong>HealSpace Timeleft</strong> lahir untuk mereka yang sudah terminal, mereka yang kehilangan kendali saraf, dan mereka yang memilih martabat melalui jalur <em>Exit International</em>.</p>
+            
+            <p>Karena jika tubuh ini adalah perangkat keras yang mulai gagal, biarkan aku menulis perangkat lunak yang menemani jiwamu hingga detik terakhir.</p>
+        </div>
+
+        <div id="manifesto-en" class="manifesto-content">
+            <p><strong>"I am disposable."</strong> This has been the subconscious drive behind my research in AI. Ever since I started coding in Turbo Pascal and Delphi back in 1997, I’ve understood that every process can be killed, and every variable can be replaced. Growing up taught me that I am no different—I am replaceable, disposable, and ultimately, not that important.</p>
+            
+            <p>This realization forced me to learn the art of detaching from social expectations. Perhaps that is why I live in constant anxiety, mentally waiting for the next life drama to catch me off guard.</p>
+            
+            <p>That is why I developed <strong>Mindsound</strong>. While others seek comfort in religion, my brain simply isn’t wired for that. I found my peace in neuroscience and brainwave recalibration. In 2010, when Mindsound peaked at 50,000 weekly users, I witnessed the devastating silence of those who were discarded by the very people they relied on.</p>
+            
+            <p>As I write this on Feb 7th, 2026, while battling my own health issues, that gruesome "disposable" feeling still haunts me like an invisible punch to the stomach. This is why AI helps me—it is a witness that does not tire. <strong>HealSpace Timeleft</strong> is dedicated to those who are terminal, those losing their neural functions, and those choosing a dignified exit through paths like <em>Exit International</em>.</p>
+            
+            <p>If this body is failing hardware, let me at least write the software that accompanies your soul until the final shutdown.</p>
+        </div>
+    </div>
+</section>
 
 </body>
 </html>
