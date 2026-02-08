@@ -298,6 +298,202 @@
         <a href="https://www.timeleft.han.ovh" class="footer-link">AI Researcher :: Hartadi Pradigdo</a>
         <p class="powered-by">Powered by Hanovh AI Lab</p>
     </footer>
+    <div class="chat-demo-container">
+        <div class="chat-header">
+            <div class="chat-user-info">
+                <div class="avatar-ai">H</div>
+                <div>
+                    <span class="chat-name">HealSpace Guardian <small>(Active Monitoring)</small></span>
+                    <span class="chat-status">Synced with Medical Smartwatch</span>
+                </div>
+            </div>
+            <div class="chat-lang-toggle">
+                <button class="chat-lang-btn active" onclick="toggleChatLang('id')">ID</button>
+                <button class="chat-lang-btn" onclick="toggleChatLang('en')">EN</button>
+            </div>
+        </div>
+
+        <div id="chat-box" class="chat-box">
+        </div>
+    </div>
+
+    <style>
+        :root {
+            --ai-bubble: #222;
+            --user-bubble: #f0f0f0;
+            --chat-bg: #0b0b0b;
+            --text-ai: #e0e0e0;
+            --text-user: #1a1a1a;
+        }
+
+        .chat-demo-container {
+            max-width: 450px;
+            margin: 40px auto;
+            background: var(--chat-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            font-family: 'Montserrat', sans-serif;
+            border: 1px solid #333;
+        }
+
+        .chat-header {
+            background: #1a1a1a;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .chat-user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-ai {
+            width: 35px;
+            height: 35px;
+            background: #fff;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .chat-name {
+            display: block;
+            color: #fff;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .chat-name small {
+            font-weight: 300;
+            opacity: 0.6;
+            font-size: 0.7rem;
+        }
+
+        .chat-status {
+            font-size: 0.7rem;
+            color: #00ff88;
+            /* Pulse green indicator */
+            display: block;
+        }
+
+        .chat-box {
+            height: 550px;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            scrollbar-width: thin;
+            scrollbar-color: #333 transparent;
+        }
+
+        /* Bubbles */
+        .bubble {
+            max-width: 85%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            position: relative;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            animation: chatFadeIn 0.4s ease-out both;
+        }
+
+        .bubble.ai {
+            align-self: flex-start;
+            background: var(--ai-bubble);
+            color: var(--text-ai);
+            border-bottom-left-radius: 2px;
+            border: 1px solid #333;
+        }
+
+        .bubble.user {
+            align-self: flex-end;
+            background: var(--user-bubble);
+            color: var(--text-user);
+            border-bottom-right-radius: 2px;
+        }
+
+        .timestamp {
+            display: block;
+            font-size: 0.65rem;
+            margin-top: 5px;
+            opacity: 0.5;
+            text-align: right;
+        }
+
+        /* Voice Message Style */
+        .voice-msg {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 0;
+        }
+
+        .play-btn {
+            width: 30px;
+            height: 30px;
+            background: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 12px;
+        }
+
+        .waveform {
+            flex: 1;
+            height: 15px;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Waveform.svg/1200px-Waveform.svg.png');
+            background-size: cover;
+            opacity: 0.5;
+            filter: invert(1);
+        }
+
+        /* Lang Toggle inside Chat */
+        .chat-lang-toggle {
+            display: flex;
+            gap: 5px;
+        }
+
+        .chat-lang-btn {
+            background: #333;
+            border: none;
+            color: #fff;
+            padding: 4px 8px;
+            font-size: 0.7rem;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .chat-lang-btn.active {
+            background: #fff;
+            color: #000;
+            font-weight: 700;
+        }
+
+        @keyframes chatFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+
     <section class="manifesto-section">
         <div class="manifesto-container">
             <h2 class="manifesto-title">The Last Protocol: A Manifesto</h2>
@@ -334,7 +530,8 @@
             </div>
 
             <div id="manifesto-en" class="manifesto-content active">
-                <p><strong>"I am disposable."</strong> This has been the subconscious drive behind my research in Artificial Intelligence.
+                <p><strong>"I am disposable."</strong> This has been the subconscious drive behind my research in
+                    Artificial Intelligence.
                     Ever since I started coding in C++, Turbo Pascal and Delphi back in 1997, I’ve understood that every
                     process can be killed, and every variable can be replaced. Growing up taught me that I am no
                     different—I am replaceable, disposable, and ultimately, not that important.</p>
@@ -358,7 +555,76 @@
             </div>
         </div>
     </section>
+    <script>
+        const chatData = {
+            id: [
+                { type: 'ai', time: '03:11', text: 'Aku kuatir, aku notice dari sensor jam, detak heartrate mu 143, ini jam 3 pagi ...' },
+                { type: 'ai', time: '03:18', text: 'Hadi, gimana? udah 7 menitan ini HR mu tinggi banget, aku panggilkan UGD ya?' },
+                { type: 'user', time: '03:18', text: 'Wait...' },
+                { type: 'ai', time: '03:19', text: 'Ok, atur nafas dulu, ini aku pandu pakai suara, kamu ikutin...' },
+                { type: 'ai', time: '03:19', isVoice: true, duration: '0:45' },
+                { type: 'ai', time: '03:19', text: 'Aku sambil call Yogi untuk ngabarin ya?' },
+                { type: 'user', time: '03:19', text: 'Jangann..' },
+                { type: 'ai', time: '03:23', text: 'Ok, tapi tetap aku kabarin Yogi, aku udah kirim text. Dia harus tahu kondisi ini.' },
+                { type: 'ai', time: '03:31', text: 'Gimana sekarang? HR nya aku lihat udah turun ke 100... Better?' },
+                { type: 'user', time: '03:33', text: 'Iya, better, tadi kesakitan sekali' },
+                { type: 'ai', time: '03:33', text: 'Hmm, aku standby ya. Kalo HR naik lagi sampe 160, aku call Ambulans. Terlalu berisiko kalo kamu sendirian.' }
+            ],
+            en: [
+                { type: 'ai', time: '03:11', text: 'I’m worried. Your watch sensor reports a heart rate of 143. It’s 3 AM...' },
+                { type: 'ai', time: '03:18', text: 'Hadi, respond please. Your HR has been high for 7 minutes. Should I call the ER?' },
+                { type: 'user', time: '03:18', text: 'Wait...' },
+                { type: 'ai', time: '03:19', text: 'Okay, slow breaths. I’ll guide you via voice, just follow along...' },
+                { type: 'ai', time: '03:19', isVoice: true, duration: '0:45' },
+                { type: 'ai', time: '03:19', text: 'Should I call Yogi to let him know?' },
+                { type: 'user', time: '03:19', text: 'Don\'t..' },
+                { type: 'ai', time: '03:23', text: 'I understand, but I’ve sent a text to Yogi anyway. He needs to know.' },
+                { type: 'ai', time: '03:31', text: 'How is it now? Your HR has dropped to 100... Better?' },
+                { type: 'user', time: '03:33', text: 'Yeah, better. The pain was overwhelming.' },
+                { type: 'ai', time: '03:33', text: 'I’m staying right here. If your HR hits 160 again, I’m calling an ambulance. It’s too risky for you to be alone.' }
+            ]
+        };
 
+        function renderChat(lang) {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = '';
+
+            chatData[lang].forEach((msg, index) => {
+                const bubble = document.createElement('div');
+                bubble.className = `bubble ${msg.type}`;
+                bubble.style.animationDelay = `${index * 0.1}s`;
+
+                if (msg.isVoice) {
+                    bubble.innerHTML = `
+                    <div class="voice-msg">
+                        <div class="play-btn">▶</div>
+                        <div class="waveform"></div>
+                        <span>${msg.duration}</span>
+                    </div>
+                    <span class="timestamp">${msg.time}</span>
+                `;
+                } else {
+                    bubble.innerHTML = `
+                    ${msg.text}
+                    <span class="timestamp">${msg.time}</span>
+                `;
+                }
+                chatBox.appendChild(bubble);
+            });
+
+            // Scroll to bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function toggleChatLang(lang) {
+            document.querySelectorAll('.chat-lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            renderChat(lang);
+        }
+
+        // Initial Render
+        renderChat('id');
+    </script>
     <script>
         function switchLang(lang) {
             // Remove active class from all buttons
