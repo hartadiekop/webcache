@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedHanovh - Medical Document</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+    <div id="loader" class="flex items-center justify-center h-screen">
+        <p class="text-gray-500 animate-pulse">Memuat dokumen medis...</p>
+    </div>
+    <div id="content" class="hidden"></div>
+
+    <script>
+        async function loadDocument() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const iwp = urlParams.get('iwp');
+            
+            if (!iwp) {
+                document.getElementById('loader').innerText = "ID Dokumen tidak ditemukan.";
+                return;
+            }
+
+            try {
+                // Panggil API n8n lo
+                const response = await fetch(`https://apivan.han.ovh/webhook/webdoc-13c1d17b?iwp=${iwp}`);
+                if (!response.ok) throw new Error('Gagal mengambil data');
+                
+                const htmlContent = await response.text();
+                
+                // Inject konten ke dalam div
+                const contentDiv = document.getElementById('content');
+                contentDiv.innerHTML = htmlContent;
+                
+                // Sembunyikan loader, tampilkan konten
+                document.getElementById('loader').classList.add('hidden');
+                contentDiv.classList.remove('hidden');
+            } catch (error) {
+                document.getElementById('loader').innerText = "Terjadi kesalahan saat memuat dokumen.";
+                console.error(error);
+            }
+        }
+
+        window.onload = loadDocument;
+    </script>
+</body>
+</html>
