@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MedHanovh - Medical AI Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                opacity: 0.5;
+                box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+            }
+            50% {
+                opacity: 1;
+                box-shadow: 0 0 40px rgba(59, 130, 246, 0.6);
+            }
+        }
+
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        @keyframes slide-in-left {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slide-in-right {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .pulse-glow {
+            animation: pulse-glow 3s ease-in-out infinite;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #0369a1, #06b6d4);
+            background-size: 400% 400%;
+            animation: gradient-shift 15s ease infinite;
+        }
+
+        .slide-left {
+            animation: slide-in-left 1s ease-out;
+        }
+
+        .slide-right {
+            animation: slide-in-right 1s ease-out;
+        }
+
+        .medical-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.2);
+        }
+
+        .blob {
+            position: absolute;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .blob:nth-child(2) {
+            animation-delay: 2s;
+            animation-duration: 10s;
+        }
+
+        .blob:nth-child(3) {
+            animation-delay: 4s;
+            animation-duration: 12s;
+        }
+    </style>
+</head>
+<body class="bg-slate-950 text-white overflow-x-hidden">
+    <!-- Animated background blobs -->
+    <div class="fixed inset-0 pointer-events-none">
+        <div class="blob w-96 h-96 top-10 left-10"></div>
+        <div class="blob w-80 h-80 top-1/2 right-20"></div>
+        <div class="blob w-72 h-72 bottom-20 left-1/3"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="relative z-10 px-6 py-4 border-b border-slate-800/50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-purple-600 rounded-lg flex items-center justify-center font-bold">
+                    M
+                </div>
+                <span class="text-xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                    MedHanovh
+                </span>
+            </div>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#features" class="text-slate-300 hover:text-white transition">Features</a>
+                <a href="#capabilities" class="text-slate-300 hover:text-white transition">Capabilities</a>
+                <a href="#footer" class="text-slate-300 hover:text-white transition">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative z-10 min-h-screen flex items-center justify-center pt-20 pb-20 px-6">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <!-- Left content -->
+            <div class="slide-left">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    Medical AI Assistant for <span class="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">Healthcare Professionals</span>
+                </h1>
+                <p class="text-xl text-slate-300 mb-8 leading-relaxed">
+                    Meet <span class="font-semibold text-cyan-400">Azalia</span> — Your intelligent Telegram bot powered by cutting-edge medical AI. Engage in meaningful medical conversations and receive professionally structured scientific documents instantly.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button class="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-105">
+                        Start with Azalia
+                    </button>
+                    <button class="px-8 py-4 border-2 border-slate-400 rounded-lg font-semibold hover:bg-slate-800 transition">
+                        Learn More
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right visual -->
+            <div class="slide-right relative h-96 md:h-full">
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <div class="relative w-full h-full">
+                        <!-- Phone mockup -->
+                        <div class="absolute inset-1/4 bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl border-8 border-slate-700 shadow-2xl float">
+                            <div class="p-4 h-full flex flex-col">
+                                <!-- Chat header -->
+                                <div class="bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl p-3 mb-4 text-sm font-semibold">
+                                    Azalia Medical AI
+                                </div>
+                                <!-- Chat messages -->
+                                <div class="flex-1 space-y-3 text-sm">
+                                    <div class="bg-slate-700 rounded-lg p-2 max-w-xs">
+                                        How can I help with your medical query?
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="bg-blue-600 rounded-lg p-2 max-w-xs ml-auto inline-block">
+                                            What are the symptoms of hypertension?
+                                        </div>
+                                    </div>
+                                    <div class="text-xs text-slate-400 space-y-1">
+                                        <div class="bg-slate-700 rounded-lg p-2 max-w-xs">
+                                            📄 <span class="text-cyan-400">Medical Document</span> Generated ✓
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Glow effect -->
+                        <div class="absolute inset-0 rounded-3xl pulse-glow pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="relative z-10 py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                Powered by Advanced Medical AI
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-hover bg-slate-900/50 border border-slate-800 rounded-2xl p-8 backdrop-blur">
+                    <div class="w-14 h-14 bg-gradient-to-br from-blue-400 to-blue-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        💬
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Medical Conversation</h3>
+                    <p class="text-slate-300">
+                        Engage in intelligent conversations about medical topics. Azalia understands complex medical queries and provides evidence-based responses.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card-hover bg-slate-900/50 border border-slate-800 rounded-2xl p-8 backdrop-blur">
+                    <div class="w-14 h-14 bg-gradient-to-br from-purple-400 to-purple-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        📄
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Scientific Documents</h3>
+                    <p class="text-slate-300">
+                        Receive professionally structured medical documents with references, research data, and clinical insights delivered as webpage attachments.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card-hover bg-slate-900/50 border border-slate-800 rounded-2xl p-8 backdrop-blur">
+                    <div class="w-14 h-14 bg-gradient-to-br from-cyan-400 to-cyan-600 rounded-lg flex items-center justify-center mb-6 text-2xl">
+                        ⚡
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Instant Delivery</h3>
+                    <p class="text-slate-300">
+                        Get instant access to medical information and documents directly within Telegram, with seamless integration and easy sharing.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Capabilities Section -->
+    <section id="capabilities" class="relative z-10 py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16">
+                What Azalia Can Do
+            </h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6 backdrop-blur hover:border-blue-500/50 transition">
+                        <h4 class="flex items-center text-lg font-semibold mb-2">
+                            <span class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mr-3 text-sm">✓</span>
+                            Clinical Decision Support
+                        </h4>
+                        <p class="text-slate-400 ml-11">
+                            Assist in clinical decision-making with evidence-based recommendations
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6 backdrop-blur hover:border-purple-500/50 transition">
+                        <h4 class="flex items-center text-lg font-semibold mb-2">
+                            <span class="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center mr-3 text-sm">✓</span>
+                            Research Literature
+                        </h4>
+                        <p class="text-slate-400 ml-11">
+                            Access curated medical literature and research papers on demand
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6 backdrop-blur hover:border-cyan-500/50 transition">
+                        <h4 class="flex items-center text-lg font-semibold mb-2">
+                            <span class="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center mr-3 text-sm">✓</span>
+                            Medical Document Generation
+                        </h4>
+                        <p class="text-slate-400 ml-11">
+                            Generate formatted medical reports and structured documentation instantly
+                        </p>
+                    </div>
+
+                    <div class="bg-slate-900/50 border border-slate-800 rounded-xl p-6 backdrop-blur hover:border-pink-500/50 transition">
+                        <h4 class="flex items-center text-lg font-semibold mb-2">
+                            <span class="w-8 h-8 bg-pink-500 rounded-full flex items-center justify-center mr-3 text-sm">✓</span>
+                            Professional Guidance
+                        </h4>
+                        <p class="text-slate-400 ml-11">
+                            Get expert-level medical guidance tailored for professionals and academicians
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 float">
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl">🏥</span>
+                                <div>
+                                    <p class="font-semibold text-cyan-400">Use Case: Hospital Setting</p>
+                                    <p class="text-sm text-slate-400 mt-1">Quickly access latest treatment guidelines during patient consultations</p>
+                                </div>
+                            </div>
+                            <hr class="border-slate-700"/>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl">🎓</span>
+                                <div>
+                                    <p class="font-semibold text-purple-400">Use Case: Academic Research</p>
+                                    <p class="text-sm text-slate-400 mt-1">Compile research papers and generate comprehensive literature reviews</p>
+                                </div>
+                            </div>
+                            <hr class="border-slate-700"/>
+                            <div class="flex items-start space-x-3">
+                                <span class="text-2xl">📋</span>
+                                <div>
+                                    <p class="font-semibold text-blue-400">Use Case: Documentation</p>
+                                    <p class="text-sm text-slate-400 mt-1">Create professional medical reports with proper formatting and citations</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative z-10 py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="bg-gradient-to-r from-blue-600/20 to-purple-600/20 border border-blue-500/50 rounded-2xl p-12 text-center backdrop-blur">
+                <h3 class="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to Experience Medical AI?
+                </h3>
+                <p class="text-xl text-slate-300 mb-8">
+                    Join healthcare professionals and academicians using Azalia for intelligent medical assistance
+                </p>
+                <button class="px-10 py-4 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg font-semibold hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-105">
+                    Start Your Journey with Azalia
+                </button>
+                <p class="text-sm text-slate-400 mt-6">
+                    Available on Telegram • Secure • Evidence-Based • Professional-Grade
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer" class="relative z-10 border-t border-slate-800/50 mt-20 py-12 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-12 mb-12">
+                <div>
+                    <h4 class="text-lg font-bold mb-4">MedHanovh</h4>
+                    <p class="text-slate-400 text-sm">
+                        A specialized branch of Hanovh Lab dedicated to advancing medical AI solutions for healthcare professionals and academicians.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">About Azalia</h4>
+                    <p class="text-slate-400 text-sm">
+                        Azalia is an intelligent medical AI assistant powered by advanced language models and medical domain expertise, designed to support professional and academic medical work.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Technology</h4>
+                    <p class="text-slate-400 text-sm">
+                        Built with state-of-the-art AI technology, rigorous medical knowledge integration, and professional-grade security standards for healthcare environments.
+                    </p>
+                </div>
+            </div>
+
+            <hr class="border-slate-800 mb-8"/>
+
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-slate-400 text-sm mb-6 md:mb-0">
+                    © 2026 MedHanovh. Part of Hanovh Lab. All rights reserved.
+                </p>
+                <div class="text-center md:text-right">
+                    <p class="text-slate-500 text-sm font-semibold mb-2">
+                        Hanovh Lab Chief Scientist
+                    </p>
+                    <p class="text-lg font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                        Hartadi
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll behavior
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
