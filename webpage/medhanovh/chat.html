@@ -168,10 +168,12 @@ function closePanel() {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> <title>Azalia AI - Medical Consultation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Azalia AI - Medical Consultation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
+        :root { --app-height: 100svh; }
         body { font-family: 'Inter', sans-serif; overscroll-behavior-y: none; } /* Mencegah pull-to-refresh */
         .blob { position: absolute; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 40% 60% 70% 30% / 40% 50% 60% 50%; opacity: 0.1; animation: float 8s ease-in-out infinite; pointer-events: none; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
@@ -203,7 +205,7 @@ function closePanel() {
     <div class="blob w-96 h-96 top-10 left-10"></div>
     <div class="blob w-80 h-80 bottom-10 right-10"></div>
 
-    <div class="max-w-5xl mx-auto h-screen h-[100dvh] flex flex-col p-4 md:p-6 relative z-10">
+    <div class="max-w-5xl mx-auto h-[100svh] flex flex-col p-4 md:p-6 relative z-10">
         <header class="flex-none flex items-center justify-between mb-6 glass p-4 rounded-2xl border border-slate-800"> <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold shadow-lg shadow-blue-500/20">A</div>
                 <div>
