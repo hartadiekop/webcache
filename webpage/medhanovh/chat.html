@@ -96,18 +96,18 @@
         }
 
         function appendMessage(sender, text) {
-            const div = document.createElement('div');
-            div.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
-            div.innerHTML = `
-                <div class="max-w-[85%] p-4 rounded-2xl ${sender === 'user' 
-                    ? 'bg-blue-600 rounded-tr-none text-white' 
-                    : 'glass rounded-tl-none border border-slate-800 text-slate-200'} text-sm leading-relaxed shadow-xl whitespace-pre-wrap">
-                    ${text}
-                </div>
-            `;
-            chatHistory.appendChild(div);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+    const div = document.createElement('div');
+    div.className = `flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+    div.innerHTML = `
+        <div class="max-w-[85%] p-4 rounded-2xl ${sender === 'user' 
+            ? 'bg-blue-600 rounded-tr-none text-white' 
+            : 'glass rounded-tl-none border border-slate-800 text-slate-200'} 
+            text-sm leading-relaxed shadow-xl whitespace-pre-wrap"> ${text}
+        </div>
+    `;
+    chatHistory.appendChild(div);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
 
         function appendWebpageButton(id) {
             const div = document.createElement('div');
