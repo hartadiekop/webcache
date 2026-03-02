@@ -17,6 +17,22 @@
     </style>
 </head>
 <body class="bg-slate-950 text-white overflow-hidden">
+    <div id="doc-panel" class="fixed inset-y-0 right-0 w-full md:w-2/3 lg:w-1/2 glass border-l border-slate-800 shadow-2xl transform translate-x-full transition-transform duration-500 ease-in-out z-50">
+    <div class="h-full flex flex-col">
+        <div class="p-4 border-b border-slate-800 flex items-center justify-between bg-slate-900/50">
+            <h2 class="font-bold text-cyan-400 flex items-center">
+                <span class="mr-2">📄</span> Medical Report Analysis
+            </h2>
+            <button onclick="closePanel()" class="p-2 hover:bg-slate-800 rounded-lg transition text-slate-400 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+        </div>
+        <div class="flex-1 bg-white">
+            <iframe id="doc-frame" src="" class="w-full h-full border-none"></iframe>
+        </div>
+    </div>
+</div>
+<div id="panel-overlay" onclick="closePanel()" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden z-40"></div>
     <div class="blob w-96 h-96 top-10 left-10"></div>
     <div class="blob w-80 h-80 bottom-10 right-10"></div>
 
@@ -110,18 +126,38 @@
 }
 
         function appendWebpageButton(id) {
-            const div = document.createElement('div');
-            div.className = "flex justify-start mt-2";
-            div.innerHTML = `
-                <button onclick="window.open('https://med.han.ovh/webdoc.html?iwp=${id}', '_blank')" 
-                        class="ml-2 px-4 py-2 bg-slate-900 border border-cyan-500/50 text-cyan-400 text-xs rounded-lg hover:bg-cyan-500/10 transition flex items-center space-x-2 shadow-lg">
-                    <span>📄 See Advanced Detail</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
-                </button>
-            `;
-            chatHistory.appendChild(div);
-            chatHistory.scrollTop = chatHistory.scrollHeight;
-        }
+    const div = document.createElement('div');
+    div.className = "flex justify-start mt-2";
+    div.innerHTML = `
+        <button onclick="openDoc('${id}')" 
+                class="ml-2 px-4 py-2 bg-slate-900 border border-cyan-500/50 text-cyan-400 text-xs rounded-lg hover:bg-cyan-500/10 transition flex items-center space-x-2 shadow-lg">
+            <span>📄 See Advanced Detail</span>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" /></svg>
+        </button>
+    `;
+    chatHistory.appendChild(div);
+    chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+        
+        // Fungsi untuk membuka panel
+function openDoc(webpageId) {
+    const panel = document.getElementById('doc-panel');
+    const overlay = document.getElementById('panel-overlay');
+    const frame = document.getElementById('doc-frame');
+    
+    // Set URL n8n renderer lo (sesuai diskusi iwp=ID)
+    frame.src = `https://med.han.ovh/webdoc.html?iwp=${webpageId}`;
+    
+    panel.classList.remove('translate-x-full');
+    overlay.classList.remove('hidden');
+}
+        
+function closePanel() {
+    const panel = document.getElementById('doc-panel');
+    const overlay = document.getElementById('panel-overlay');
+    panel.classList.add('translate-x-full');
+    overlay.classList.add('hidden');
+}
 
         sendBtn.addEventListener('click', sendMessage);
         userInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') sendMessage(); });
