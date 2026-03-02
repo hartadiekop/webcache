@@ -241,7 +241,8 @@ function closePanel() {
         const loading = document.getElementById('loading');
 
         // User ID Persistent (Sesuai diskusi UUID v4 sebelumnya)
-        let userId = localStorage.getItem('azalia_uid') || crypto.randomUUID();
+        // let userId = localStorage.getItem('azalia_uid') || crypto.randomUUID();
+        let userId = crypto.randomUUID();
         localStorage.setItem('azalia_uid', userId);
 
         async function sendMessage() {
