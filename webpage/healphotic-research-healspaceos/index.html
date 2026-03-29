@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Healspace OS: Neuro-Physiological Mechanisms of Stroboscopic Photic Stimulation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Chosen Palette: Clinical Light (Stone/Slate/Indigo/Teal) -->
+    <!-- Application Structure Plan: The SPA is structured as an interactive academic dashboard. It avoids the linear 'wall of text' typical of journal articles by dividing the content into three interactive panels: 1. Executive Abstract & Methodology (providing foundational context), 2. Clinical Presets Explorer (allowing users to toggle between specific neurological protocols and see dynamically updating frequency charts), and 3. The Eyelid Paradox Interactive Analysis (using a slider to explore wavelength transmissivity through closed eyes). This structure was chosen to make highly complex neuro-physiological data explorable and immediately comprehensible. -->
+    <!-- Visualization & Content Choices: 1. Waveform Viz -> Goal: Inform on tech stack -> Viz: Line Chart (Step function) -> Justification: Clearly shows the WebGL math f(t) -> Lib: Chart.js. 2. Preset Frequency Tracker -> Goal: Compare/Change -> Viz: Multi-line Chart -> Justification: Shows temporal frequency shifts (glides) over a 10-minute session for Left/Right eyes -> Lib: Chart.js. 3. Eyelid Transmissivity -> Goal: Relationships -> Viz: Combo Bar/Line Chart -> Justification: Correlates wavelength (nm) with light transmission (%) and ipRGC activation -> Lib: Chart.js. ALL visual elements rely on Canvas (Chart.js) or HTML/CSS unicode icons. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        /* Essential Chart Container Styling for Responsiveness and Control */
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30vh;
+            min-height: 250px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        
+        /* Custom range slider styling for academic aesthetic */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            background: #4f46e5;
+            cursor: pointer;
+            margin-top: -8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: #cbd5e1;
+            border-radius: 2px;
+        }
+        
+        body {
+            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f8fafc; /* slate-50 */
+            color: #1e293b; /* slate-800 */
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-indigo-200 selection:text-indigo-900">
+
+    <!-- Top Navigation / Header -->
+    <header class="bg-white border-b border-slate-200 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="text-2xl" aria-hidden="true">&#9722;</span>
+                <h1 class="text-xl font-bold tracking-tight text-slate-900">Healspace OS <span class="text-indigo-600 font-medium">| HealPhotic Research</span></h1>
+            </div>
+            <nav class="hidden md:flex space-x-8 text-sm font-medium text-slate-600">
+                <a href="#abstract" class="hover:text-indigo-600 transition-colors">Abstract & Methodology</a>
+                <a href="#presets" class="hover:text-indigo-600 transition-colors">Clinical Presets</a>
+                <a href="#paradox" class="hover:text-indigo-600 transition-colors">The Eyelid Paradox</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+
+        <!-- Section 1: Abstract & Methodology -->
+        <section id="abstract" class="scroll-mt-20">
+            <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+                <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
+                    <div class="lg:col-span-2 space-y-4">
+                        <div class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                            Scientific Journal Extract
+                        </div>
+                        <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Neuro-Physiological Mechanisms of Closed-Eye Stroboscopic Photic Stimulation</h2>
+                        <p class="text-lg text-slate-600 leading-relaxed">
+                            This document investigates the efficacy of the <strong>HealPhotic</strong> module within the Healspace OS. By utilizing Stroboscopic Photic Stimulation (SPS) delivered via a high-resolution smartphone display housed within a VR Box, the system aims to induce precise brainwave entrainment (BWE) in users with closed eyes.
+                        </p>
+                        <p class="text-sm text-slate-500 leading-relaxed border-l-4 border-indigo-500 pl-4 mt-4">
+                            <strong>Methodology (Visual Engine):</strong> The stimulation relies on millisecond-precise hardware-accelerated rendering utilizing Vue 3, Tailwind CSS, and WebGL (Fragment Shaders). Frequencies traverse a therapeutic spectrum of 1Hz to 20Hz. The photic flicker is mathematically governed by a time-based sine wave step function to ensure a rigid 50% duty cycle, preventing photic bleed and ensuring precise cortical follow response.
+                        </p>
+                    </div>
+                    
+                    <!-- WebGL Formula Visualization -->
+                    <div class="bg-slate-50 p-4 rounded-lg border border-slate-200 flex flex-col items-center justify-center space-y-4">
+                        <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider text-center">Flicker Logic Waveform</h3>
+                        <code class="text-xs bg-slate-800 text-green-400 px-3 py-2 rounded-md font-mono shadow-inner w-full text-center overflow-x-auto">
+                            f(t) = step(0.0, sin(t * freq * 2&pi;))
+                        </code>
+                        <div class="chart-container h-32 w-full mt-2" style="height: 120px; min-height: 120px;">
+                            <canvas id="waveformChart"></canvas>
+                        </div>
+                        <p class="text-xs text-slate-500 text-center">Simulated 5Hz Square Wave Translation via WebGL Step Function.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Clinical Presets Explorer -->
+        <section id="presets" class="scroll-mt-20 space-y-6">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-slate-900">Neurological Presets & Entrainment Profiles</h2>
+                <p class="text-slate-600 mt-2 max-w-3xl">
+                    Explore the clinical application of SPS across three distinct neuro-modulatory protocols. Select a preset below to analyze the bilateral frequency mapping, spectrum utilization, and neuro-physiological targets over a standardized 10-minute session.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                
+                <!-- Interactive Controls -->
+                <div class="lg:col-span-4 flex flex-col space-y-3">
+                    <button onclick="updatePreset('A')" id="btn-preset-A" class="preset-btn text-left p-4 rounded-lg border-2 transition-all duration-200 border-indigo-500 bg-indigo-50 shadow-sm relative overflow-hidden group">
+                        <div class="absolute right-[-10px] top-[-10px] opacity-10 text-6xl group-hover:scale-110 transition-transform">&#9788;</div>
+                        <h3 class="font-bold text-slate-900">A. Depression & Anxiety Relief</h3>
+                        <p class="text-xs text-slate-500 mt-1">Binocular Hemispheric Rebalancing</p>
+                    </button>
+
+                    <button onclick="updatePreset('B')" id="btn-preset-B" class="preset-btn text-left p-4 rounded-lg border-2 border-transparent bg-white hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 shadow-sm relative overflow-hidden group">
+                        <div class="absolute right-[-10px] top-[-10px] opacity-10 text-6xl group-hover:scale-110 transition-transform">&#9789;</div>
+                        <h3 class="font-bold text-slate-900">B. Deep Sleep Induction</h3>
+                        <p class="text-xs text-slate-500 mt-1">Frequency Following Response (FFR)</p>
+                    </button>
+
+                    <button onclick="updatePreset('C')" id="btn-preset-C" class="preset-btn text-left p-4 rounded-lg border-2 border-transparent bg-white hover:border-slate-300 hover:bg-slate-50 transition-all duration-200 shadow-sm relative overflow-hidden group">
+                        <div class="absolute right-[-10px] top-[-10px] opacity-10 text-6xl group-hover:scale-110 transition-transform">&#10022;</div>
+                        <h3 class="font-bold text-slate-900">C. Cosmic Vision</h3>
+                        <p class="text-xs text-slate-500 mt-1">Stroboscopic Induced Hallucinations</p>
+                    </button>
+                </div>
+
+                <!-- Dynamic Data View -->
+                <div class="lg:col-span-8 bg-white border border-slate-200 rounded-xl p-6 shadow-sm flex flex-col">
+                    
+                    <!-- Dynamic Text Content -->
+                    <div class="mb-6 pb-6 border-b border-slate-100">
+                        <h3 id="display-title" class="text-xl font-bold text-indigo-700 mb-3">A. Depression & Anxiety Relief (Binocular Hemispheric Rebalancing)</h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="bg-slate-50 p-4 rounded text-slate-700 border border-slate-100">
+                                <strong class="text-slate-900 block mb-1">Neurological Target:</strong>
+                                <span id="display-concept">Addressing Frontal Alpha Asymmetry. By leveraging split-screen VR capabilities, we target localized cortical networks.</span>
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded text-slate-700 border border-slate-100">
+                                <strong class="text-slate-900 block mb-1">Stimulation Vector:</strong>
+                                <span id="display-stim">Left Eye (Right Brain): Alpha-Theta Glide (12Hz &rarr; 7Hz) [Cyan/Cool Blue]. Right Eye (Left Brain): High Beta Sync (15Hz - 18Hz) [Purple/Deep Violet].</span>
+                            </div>
+                        </div>
+
+                        <p id="display-goal" class="mt-4 text-slate-600 leading-relaxed text-sm">
+                            <strong>Scientific Goal:</strong> To investigate how the cool spectrum light inhibits amygdala hyperactivation, while simultaneous binocular divergent entrainment rebalances Prefrontal Cortex (PFC) lateralization typically skewed in depressive phenotypes.
+                        </p>
+                    </div>
+
+                    <!-- Dynamic Chart -->
+                    <div class="flex-grow flex flex-col justify-end">
+                        <div class="flex justify-between items-end mb-2">
+                            <h4 class="text-sm font-semibold text-slate-700">Frequency Timeline (10-Min Session)</h4>
+                            <span class="text-xs font-mono text-slate-400">Y: Frequency (Hz) | X: Time (Mins)</span>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="presetChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: The Eyelid Paradox (Critical Analysis) -->
+        <section id="paradox" class="scroll-mt-20">
+            <div class="bg-slate-900 text-slate-300 rounded-xl shadow-lg overflow-hidden relative">
+                <!-- Decorative background elements -->
+                <div class="absolute top-0 right-0 p-8 opacity-5 text-9xl pointer-events-none">&#9785;</div>
+                
+                <div class="p-6 md:p-8 grid grid-cols-1 lg:grid-cols-2 gap-10">
+                    
+                    <div class="space-y-6 relative z-10">
+                        <div>
+                            <h2 class="text-3xl font-extrabold text-white tracking-tight">The Eyelid Paradox</h2>
+                            <p class="text-indigo-400 font-medium mt-1">Physiological Relevance of Closed-Eye Phototherapy</p>
+                        </div>
+                        
+                        <p class="text-sm leading-relaxed">
+                            A common critique of VR-based phototherapy is the barrier presented by the eyelid. How can specific chromotherapy (e.g., Cyan/Indigo) be effective if the user's eyes are shut? The Eyelid Paradox addresses the complex interaction of light transmissivity, non-image-forming visual pathways, and cortical interpretation of noisy signals.
+                        </p>
+                        
+                        <ul class="space-y-4 text-sm mt-4">
+                            <li class="flex items-start">
+                                <span class="text-indigo-400 mr-3 text-lg leading-none">&#8226;</span>
+                                <div>
+                                    <strong class="text-white">Tissue Transmissivity:</strong> 
+                                    Human eyelids act as a low-pass optical filter. They transmit roughly <span class="text-red-400">10% of longer wavelengths (Red/650nm)</span>, but heavily occlude shorter wavelengths, transmitting only <span class="text-cyan-400">~0.3% of Cyan/Blue (480nm)</span>.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-400 mr-3 text-lg leading-none">&#8226;</span>
+                                <div>
+                                    <strong class="text-white">Melanopsin Activation (ipRGCs):</strong>
+                                    Despite 99.7% attenuation of Cyan/Blue light, intrinsically photosensitive Retinal Ganglion Cells (ipRGCs) are exceptionally sensitive to the ~480nm spectrum. A smartphone screen directly adjacent to the closed eye in a dark VR box provides sufficient lux to trigger ipRGCs, modulating the Suprachiasmatic Nucleus (SCN) and influencing circadian rhythms and amygdala states.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-indigo-400 mr-3 text-lg leading-none">&#8226;</span>
+                                <div>
+                                    <strong class="text-white">Phosphenes & Priming:</strong>
+                                    The visual cortex (V1-V4), deprived of standard patterned input by the eyelids, attempts to interpret the stroboscopic flashes. This generates <em>Purkinje Patterns</em> (fractals, grids). The background hue that penetrates the eyelid "tints" these hallucinations, serving as a sensory carrier wave that primes the user's psychological state.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Interactive Eyelid Transmissivity Analyzer -->
+                    <div class="bg-slate-800 border border-slate-700 p-6 rounded-lg relative z-10 flex flex-col space-y-6">
+                        <div class="text-center">
+                            <h3 class="text-lg font-bold text-white mb-1">Transmissivity Analyzer</h3>
+                            <p class="text-xs text-slate-400">Simulating photon penetration through the palpebra (eyelid).</p>
+                        </div>
+                        
+                        <!-- Interactive Slider -->
+                        <div class="px-2">
+                            <div class="flex justify-between text-xs font-mono mb-2">
+                                <span class="text-blue-400">400nm (Violet)</span>
+                                <span class="text-green-400">550nm (Green)</span>
+                                <span class="text-red-400">700nm (Red)</span>
+                            </div>
+                            <input type="range" id="wavelengthSlider" min="400" max="700" value="480" step="10" oninput="updateTransmissivityAnalysis()">
+                        </div>
+                        
+                        <!-- Real-time Data Readout -->
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-900 rounded p-3 border border-slate-700 text-center">
+                                <div class="text-xs text-slate-400 uppercase tracking-wide">Selected Wavelength</div>
+                                <div id="readout-wl" class="text-2xl font-mono font-bold" style="color: #06b6d4;">480 nm</div>
+                                <div id="readout-color" class="text-xs text-slate-500 mt-1">Cyan / Blue</div>
+                            </div>
+                            <div class="bg-slate-900 rounded p-3 border border-slate-700 text-center relative overflow-hidden">
+                                <div class="text-xs text-slate-400 uppercase tracking-wide">Lid Transmissivity</div>
+                                <div class="text-2xl font-mono font-bold text-white"><span id="readout-trans">0.3</span>%</div>
+                                <div id="readout-effect" class="text-xs font-bold text-cyan-400 mt-1">Peak ipRGC Activation</div>
+                            </div>
+                        </div>
+
+                        <!-- Mini Chart for Transmissivity Curve -->
+                        <div class="flex-grow">
+                             <div class="chart-container" style="height: 100%; min-height: 180px;">
+                                <canvas id="transmissivityChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Conclusion -->
+        <section class="pb-12">
+            <div class="border-t border-slate-200 pt-8 mt-8">
+                <h2 class="text-xl font-bold text-slate-900 mb-4">Conclusion</h2>
+                <p class="text-sm text-slate-600 leading-relaxed">
+                    The HealPhotic module bridges the gap between digital interface design and rigorous neuro-modulation. By utilizing WebGL for deterministic flicker timing and leveraging the nuanced physiology of closed-eye light perception (The Eyelid Paradox), the system provides a robust platform for Brainwave Entrainment. Whether addressing Frontal Alpha Asymmetry for depression, utilizing FFR for deep sleep, or exploring Ganzfeld-induced phenomenology, Healspace OS acts as a verifiable biohacking instrument.
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- DATA STATE: PRESETS ---
+        const presetData = {
+            A: {
+                title: "A. Depression & Anxiety Relief (Binocular Hemispheric Rebalancing)",
+                concept: "Addressing Frontal Alpha Asymmetry. By leveraging split-screen VR capabilities, we target localized cortical networks.",
+                stim: "Left Eye (Right Brain): Alpha-Theta Glide (12Hz &rarr; 7Hz) [Cyan/Cool Blue]. Right Eye (Left Brain): High Beta Sync (15Hz - 18Hz) [Purple/Deep Violet].",
+                goal: "<strong>Scientific Goal:</strong> To investigate how the cool spectrum light inhibits amygdala hyperactivation, while simultaneous binocular divergent entrainment rebalances Prefrontal Cortex (PFC) lateralization typically skewed in depressive phenotypes.",
+                chartData: {
+                    labels: ['0', '2', '4', '6', '8', '10'], // Time in minutes
+                    datasets: [
+                        {
+                            label: 'Left Eye (Alpha-Theta Glide)',
+                            data: [12, 11, 10, 9, 8, 7],
+                            borderColor: '#06b6d4', // Cyan
+                            backgroundColor: 'rgba(6, 182, 212, 0.1)',
+                            borderWidth: 3,
+                            fill: true,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Right Eye (High Beta Sync)',
+                            data: [15, 15.5, 16, 17, 18, 18],
+                            borderColor: '#8b5cf6', // Violet
+                            borderDash: [5, 5],
+                            borderWidth: 3,
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
+                }
+            },
+            B: {
+                title: "B. Deep Sleep Induction (Frequency Following Response - FFR)",
+                concept: "Global brainwave down-ramping. Exploits the brain's natural tendency to synchronize with external rhythmic stimuli.",
+                stim: "A seamless, synchronized binocular glide from 12Hz Beta (Alertness) down to 1.5Hz Delta (SWS - Slow Wave Sleep) over 10 minutes. Visuals utilize Indigo/Deep Blue with intensity dimming.",
+                goal: "<strong>Scientific Goal:</strong> Validate the efficacy of FFR in sleep onset acceleration and the management of melatonin suppression. Dimmed spectrums prevent circadian phase delay while entraining the cortex to SWS patterns.",
+                chartData: {
+                    labels: ['0', '2', '4', '6', '8', '10'],
+                    datasets: [
+                        {
+                            label: 'Global FFR Entrainment',
+                            data: [12, 9, 6, 4, 2, 1.5],
+                            borderColor: '#3730a3', // Indigo
+                            backgroundColor: 'rgba(55, 48, 163, 0.2)',
+                            borderWidth: 4,
+                            fill: true,
+                            tension: 0.2
+                        }
+                    ]
+                }
+            },
+            C: {
+                title: "C. Cosmic Vision (Stroboscopic Induced Visual Hallucinations)",
+                concept: "Ganzfeld Effect and Binocular Rivalry. Inducing controlled visual noise to map internal cortical projections.",
+                stim: "Alternating high-contrast hues (Opposite spectrums) between eyes at transitionary frequencies of 8Hz - 15Hz (Alpha-Beta band).",
+                goal: "<strong>Scientific Goal:</strong> Explain the neuro-phenomenology of Phosphenes and Purkinje Patterns. This protocol observes how chaotic visual noise triggers the visual cortex (V1-V4) to project internal geometry, overriding standard visual processing.",
+                chartData: {
+                    labels: ['0', '2', '4', '6', '8', '10'],
+                    datasets: [
+                        {
+                            label: 'Left Eye Oscillation',
+                            data: [8, 15, 8, 15, 8, 15],
+                            borderColor: '#ef4444', // Red
+                            borderWidth: 2,
+                            stepped: true,
+                            fill: false
+                        },
+                        {
+                            label: 'Right Eye Oscillation',
+                            data: [15, 8, 15, 8, 15, 8],
+                            borderColor: '#10b981', // Green
+                            borderWidth: 2,
+                            stepped: true,
+                            fill: false
+                        }
+                    ]
+                }
+            }
+        };
+
+        // --- CHART INITIALIZATION ---
+        Chart.defaults.font.family = 'ui-sans-serif, system-ui, sans-serif';
+        Chart.defaults.color = '#64748b'; // slate-500
+
+        // 1. Waveform Chart (Small visualizer)
+        const ctxWave = document.getElementById('waveformChart').getContext('2d');
+        const waveData = [];
+        for(let i=0; i<=100; i++) {
+            // Generating a discrete step wave based on the provided formula concept
+            let val = Math.sin((i/100) * 5 * 2 * Math.PI) >= 0 ? 1 : 0;
+            waveData.push(val);
+        }
+        new Chart(ctxWave, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 101}, (_, i) => i),
+                datasets: [{
+                    label: 'f(t)',
+                    data: waveData,
+                    borderColor: '#4ade80',
+                    borderWidth: 2,
+                    stepped: true,
+                    pointRadius: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: { legend: { display: false }, tooltip: {enabled: false} },
+                scales: {
+                    x: { display: false },
+                    y: { display: false, min: -0.2, max: 1.2 }
+                },
+                layout: { padding: 0 }
+            }
+        });
+
+        // 2. Preset Frequency Chart
+        const ctxPreset = document.getElementById('presetChart').getContext('2d');
+        let presetChart = new Chart(ctxPreset, {
+            type: 'line',
+            data: presetData['A'].chartData,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    mode: 'index',
+                    intersect: false,
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: { boxWidth: 12, usePointStyle: true }
+                    },
+                    tooltip: {
+                        backgroundColor: 'rgba(15, 23, 42, 0.9)',
+                        titleFont: { size: 13 },
+                        bodyFont: { size: 13 },
+                        padding: 10,
+                        callbacks: {
+                            label: function(context) {
+                                return context.dataset.label + ': ' + context.parsed.y + ' Hz';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        title: { display: true, text: 'Session Time (Minutes)' }
+                    },
+                    y: {
+                        grid: { color: '#f1f5f9' },
+                        min: 0,
+                        max: 20,
+                        title: { display: true, text: 'Frequency (Hz)' }
+                    }
+                }
+            }
+        });
+
+        // 3. Transmissivity Curve Chart
+        const ctxTrans = document.getElementById('transmissivityChart').getContext('2d');
+        
+        // Generate biological curve data (exponential rise from 400nm to 700nm)
+        const wlLabels = [];
+        const transData = [];
+        const ipRGCData = []; // Melanopsin sensitivity curve (peak ~480nm)
+
+        for(let w=400; w<=700; w+=10) {
+            wlLabels.push(w);
+            // Simulated transmissivity: ~0.1% at 400nm, ~10% at 700nm
+            let t = 0.05 * Math.exp(0.0175 * (w - 400));
+            transData.push(Math.min(t, 10).toFixed(2));
+            
+            // Simulated ipRGC action spectrum (bell curve around 480nm)
+            let ip = 100 * Math.exp(-Math.pow(w - 480, 2) / (2 * Math.pow(25, 2)));
+            ipRGCData.push(ip.toFixed(1));
+        }
+
+        let transChart = new Chart(ctxTrans, {
+            type: 'line',
+            data: {
+                labels: wlLabels,
+                datasets: [
+                    {
+                        label: 'Lid Transmissivity (%)',
+                        data: transData,
+                        borderColor: '#f87171', // Redish curve
+                        backgroundColor: 'rgba(248, 113, 113, 0.1)',
+                        fill: true,
+                        yAxisID: 'y',
+                        tension: 0.4,
+                        pointRadius: 0
+                    },
+                    {
+                        label: 'ipRGC Sensitivity (Relative)',
+                        data: ipRGCData,
+                        borderColor: '#22d3ee', // Cyan curve
+                        borderDash: [3, 3],
+                        borderWidth: 2,
+                        yAxisID: 'y1',
+                        tension: 0.4,
+                        pointRadius: 0
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: '#cbd5e1', boxWidth: 10, font: {size: 10} }
+                    },
+                    tooltip: { enabled: false } // Controlled by slider instead
+                },
+                scales: {
+                    x: {
+                        grid: { color: '#334155', tickColor: 'transparent' },
+                        ticks: { color: '#94a3b8', maxTicksLimit: 7 }
+                    },
+                    y: {
+                        type: 'logarithmic',
+                        display: true,
+                        position: 'left',
+                        grid: { color: '#334155' },
+                        min: 0.1, max: 20,
+                        ticks: { color: '#f87171', callback: function(val) { return val + '%'; } }
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: false,
+                        position: 'right',
+                        min: 0, max: 120
+                    }
+                }
+            }
+        });
+
+        // Add a vertical line plugin to follow the slider
+        const verticalLinePlugin = {
+            id: 'verticalLinePlugin',
+            afterDraw: chart => {
+                if (chart.tooltip?._active?.length) return; // Don't draw if tooltip is active
+                const sliderVal = document.getElementById('wavelengthSlider').value;
+                const index = chart.data.labels.indexOf(Number(sliderVal));
+                
+                if (index !== -1) {
+                    const x = chart.scales.x.getPixelForTick(index);
+                    const ctx = chart.ctx;
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.moveTo(x, chart.chartArea.top);
+                    ctx.lineTo(x, chart.chartArea.bottom);
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = '#ffffff';
+                    ctx.stroke();
+                    
+                    // Draw point on Transmissivity curve
+                    const yTrans = chart.scales.y.getPixelForValue(chart.data.datasets[0].data[index]);
+                    ctx.beginPath();
+                    ctx.arc(x, yTrans, 4, 0, 2 * Math.PI);
+                    ctx.fillStyle = '#f87171';
+                    ctx.fill();
+                    ctx.stroke();
+
+                    ctx.restore();
+                }
+            }
+        };
+        Chart.register(verticalLinePlugin);
+
+
+        // --- INTERACTION LOGIC ---
+
+        // Update Preset Explorer
+        window.updatePreset = function(presetId) {
+            // Update UI Styling
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.classList.remove('border-indigo-500', 'bg-indigo-50');
+                btn.classList.add('border-transparent', 'bg-white');
+            });
+            const activeBtn = document.getElementById('btn-preset-' + presetId);
+            activeBtn.classList.remove('border-transparent', 'bg-white');
+            activeBtn.classList.add('border-indigo-500', 'bg-indigo-50');
+
+            // Update Text Content
+            const data = presetData[presetId];
+            document.getElementById('display-title').innerHTML = data.title;
+            document.getElementById('display-concept').innerHTML = data.concept;
+            document.getElementById('display-stim').innerHTML = data.stim;
+            document.getElementById('display-goal').innerHTML = data.goal;
+
+            // Update Chart
+            presetChart.data = data.chartData;
+            presetChart.update();
+        };
+
+        // Update Eyelid Slider Logic
+        window.updateTransmissivityAnalysis = function() {
+            const slider = document.getElementById('wavelengthSlider');
+            const wl = parseInt(slider.value);
+            
+            // Calculate specific values based on the same math as chart generation
+            let trans = (0.05 * Math.exp(0.0175 * (wl - 400))).toFixed(1);
+            if (trans > 10) trans = (10.0).toFixed(1);
+            
+            let iprgc = 100 * Math.exp(-Math.pow(wl - 480, 2) / (2 * Math.pow(25, 2)));
+
+            // Determine Color Name and Hex
+            let colorName = "Invisible / Deep UV";
+            let hex = "#ffffff";
+            if (wl >= 400 && wl < 450) { colorName = "Violet"; hex = "#8b5cf6"; }
+            else if (wl >= 450 && wl < 495) { colorName = "Cyan / Blue"; hex = "#06b6d4"; }
+            else if (wl >= 495 && wl < 570) { colorName = "Green"; hex = "#22c55e"; }
+            else if (wl >= 570 && wl < 590) { colorName = "Yellow"; hex = "#eab308"; }
+            else if (wl >= 590 && wl < 620) { colorName = "Orange"; hex = "#f97316"; }
+            else if (wl >= 620 && wl <= 700) { colorName = "Red"; hex = "#ef4444"; }
+
+            // Update DOM Elements
+            document.getElementById('readout-wl').innerText = wl + " nm";
+            document.getElementById('readout-wl').style.color = hex;
+            document.getElementById('readout-color').innerText = colorName;
+            
+            document.getElementById('readout-trans').innerText = trans;
+            
+            const effectEl = document.getElementById('readout-effect');
+            if (iprgc > 80) {
+                effectEl.innerText = "Peak ipRGC Activation";
+                effectEl.className = "text-xs font-bold text-cyan-400 mt-1";
+            } else if (wl > 650) {
+                effectEl.innerText = "High Tissue Penetration";
+                effectEl.className = "text-xs font-bold text-red-400 mt-1";
+            } else {
+                effectEl.innerText = "Low Non-Visual Impact";
+                effectEl.className = "text-xs font-bold text-slate-500 mt-1";
+            }
+
+            // Force chart redraw to move the vertical line
+            transChart.update('none'); 
+        };
+
+        // Initial paint for the slider line
+        setTimeout(() => transChart.update(), 100);
+
+    </script>
+</body>
+</html>
