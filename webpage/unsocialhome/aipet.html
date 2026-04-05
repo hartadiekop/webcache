@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberCore Evolution - Local AI Pet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            background-color: #020617; 
+            font-family: 'Press Start 2P', cursive; 
+            user-select: none; 
+            touch-action: manipulation; 
+        }
+        canvas { 
+            image-rendering: pixelated; 
+            background-color: #0f172a; 
+            border: 4px solid #1e293b; 
+            display: block; 
+            margin: 0 auto; 
+            width: 100%; 
+            max-width: 400px; 
+            aspect-ratio: 1/1; 
+        }
+        .stats-bar { 
+            transition: width 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+        /* Efek Getar Layar (Glitch) */
+        .glitch-active {
+            animation: shake 0.15s infinite;
+            filter: hue-rotate(90deg) brightness(1.2);
+        }
+        @keyframes shake {
+            0% { transform: translate(0,0); }
+            25% { transform: translate(-2px, 2px); }
+            50% { transform: translate(2px, -2px); }
+            75% { transform: translate(-2px, -2px); }
+            100% { transform: translate(2px, 2px); }
+        }
+        .pixel-btn:active {
+            transform: translateY(4px);
+            border-bottom-width: 0;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4 overflow-hidden">
+
+    <div class="max-w-md w-full bg-slate-800 p-6 rounded-[2rem] border-8 border-slate-900 shadow-2xl relative">
+        
+        <!-- Bar Informasi Atas -->
+        <div class="flex justify-between items-center mb-4 text-[7px] text-slate-400">
+            <div id="status-display">SISTEM: ONLINE</div>
+            <div class="flex items-center gap-2">
+                <span class="text-yellow-400">UNSOCIAL COINS:</span>
+                <span id="coin-count" class="text-white bg-black px-2 py-1 rounded">0</span>
+            </div>
+        </div>
+
+        <!-- Tampilan Utama (Canvas) -->
+        <div class="relative overflow-hidden rounded-lg">
+            <canvas id="gameCanvas" width="128" height="128"></canvas>
+            
+            <!-- Badge Tier -->
+            <div id="ai-tier" class="absolute top-2 left-2 bg-blue-600 text-white text-[7px] px-2 py-1 rounded border border-white/20">
+                T1: DRONE
+            </div>
+            
+            <!-- Indikator Level -->
+            <div id="lvl-text" class="absolute bottom-2 right-2 text-cyan-400 text-[10px] drop-shadow-md">
+                LVL 1
+            </div>
+
+            <!-- Dialogue Overlay -->
+            <div id="dialogue-box" class="absolute inset-x-0 bottom-0 bg-black/70 p-2 text-[7px] text-white border-t border-white/10 hidden">
+                ...
+            </div>
+        </div>
+
+        <!-- Bar Status -->
+        <div class="mt-6 space-y-4">
+            <!-- PWR -->
+            <div>
+                <div class="flex justify-between text-[8px] mb-1">
+                    <span class="text-yellow-500">ATTENTION (POWER)</span>
+                    <span id="pwr-val" class="text-yellow-500">100%</span>
+                </div>
+                <div class="h-3 w-full bg-black border border-slate-700">
+                    <div id="pwr-bar" class="stats-bar h-full bg-yellow-500" style="width: 100%"></div>
+                </div>
+            </div>
+            <!-- HAP -->
+            <div>
+                <div class="flex justify-between text-[8px] mb-1">
+                    <span class="text-purple-500">HAPPINESS (SYNC)</span>
+                    <span id="hap-val" class="text-purple-500">100%</span>
+                </div>
+                <div class="h-3 w-full bg-black border border-slate-700">
+                    <div id="hap-bar" class="stats-bar h-full bg-purple-500" style="width: 100%"></div>
+                </div>
+            </div>
+            <!-- XP -->
+            <div>
+                <div class="flex justify-between text-[6px] mb-1">
+                    <span class="text-cyan-500">NEURAL SYNTHESIS (XP)</span>
+                </div>
+                <div class="h-1.5 w-full bg-black border border-slate-700">
+                    <div id="xp-bar" class="stats-bar h-full bg-cyan-500 shadow-[0_0_10px_#06b6d4]" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Panel Kontrol -->
+        <div class="mt-8 grid grid-cols-2 gap-4">
+            <button onclick="interact('pwr')" class="pixel-btn group relative bg-slate-900 p-4 rounded-2xl border-b-4 border-black transition-all">
+                <div class="bg-yellow-600 group-hover:bg-yellow-500 p-3 rounded-xl flex justify-center shadow-inner">
+                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                </div>
+                <div class="text-[7px] text-slate-400 mt-2 text-center">RECHARGE</div>
+            </button>
+
+            <button onclick="interact('hap')" class="pixel-btn group relative bg-slate-900 p-4 rounded-2xl border-b-4 border-black transition-all">
+                <div class="bg-purple-600 group-hover:bg-purple-500 p-3 rounded-xl flex justify-center shadow-inner">
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L4.69 14.64L12 19L19.31 14.64L12 2ZM12 4.27L17.52 13.8L12 17.1L6.48 13.8L12 4.27ZM12 19.3L4.69 14.94L12 22L19.31 14.94L12 19.3Z"/></svg>
+                </div>
+                <div class="text-[7px] text-slate-400 mt-2 text-center">SYNC DATA</div>
+            </button>
+        </div>
+
+        <!-- Notifikasi Toast -->
+        <div id="toast" class="absolute -top-10 left-0 right-0 text-center text-cyan-400 text-[8px] opacity-0 transition-opacity pointer-events-none">
+            DATA DISIMPAN
+        </div>
+
+    </div>
+
+    <script>
+        // --- GAME STATE ---
+        let state = {
+            pwr: 100,
+            hap: 100,
+            xp: 0,
+            lvl: 1,
+            coins: 0,
+            tick: 0,
+            mood: 'IDLE' // IDLE, HAPPY, TIRED, GLITCH, SLEEP
+        };
+
+        const STORAGE_KEY = 'cybercore_ai_pet_data';
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+
+        // --- CORE FUNCTIONS ---
+
+        function loadGame() {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                state = { ...state, ...JSON.parse(savedData) };
+                showToast("MEMORI DIMUAT");
+            } else {
+                saveGame();
+            }
+            updateLoop();
+        }
+
+        function saveGame() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                pwr: state.pwr,
+                hap: state.hap,
+                xp: state.xp,
+                lvl: state.lvl,
+                coins: state.coins
+            }));
+        }
+
+        function interact(type) {
+            if (type === 'pwr') {
+                state.pwr = Math.min(100, state.pwr + 15);
+                showToast("+15 ENERGY");
+            } else {
+                state.hap = Math.min(100, state.hap + 12);
+                showToast("+12 SYNC");
+            }
+            saveGame();
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('toast');
+            t.innerText = msg;
+            t.classList.remove('opacity-0');
+            setTimeout(() => t.classList.add('opacity-0'), 2000);
+        }
+
+        function showDialogue(text) {
+            const db = document.getElementById('dialogue-box');
+            db.innerText = text;
+            db.classList.remove('hidden');
+            setTimeout(() => db.classList.add('hidden'), 3000);
+        }
+
+        // --- DRAWING LOGIC (PIXEL ART) ---
+        function drawPixelBot() {
+            ctx.clearRect(0, 0, 128, 128);
+            
+            let glitchX = 0;
+            let glitchY = 0;
+            if (state.mood === 'GLITCH') {
+                glitchX = Math.random() * 4 - 2;
+                glitchY = Math.random() * 4 - 2;
+            }
+
+            const floatSpeed = (state.mood === 'SLEEP') ? 0.01 : 0.05;
+            const floatAmp = (state.mood === 'SLEEP') ? 1.5 : 3.5;
+            const float = Math.sin(state.tick * floatSpeed) * floatAmp;
+            
+            const x = 64 + glitchX;
+            const y = 64 + float + glitchY;
+
+            // Penentuan Warna Berdasarkan Level
+            let primary = "#3b82f6"; // T1
+            if (state.lvl >= 5) primary = "#8b5cf6";  // T2
+            if (state.lvl >= 10) primary = "#06b6d4"; // T3
+            if (state.lvl >= 15) primary = "#f59e0b"; // T4 (Amber)
+            if (state.lvl >= 20) primary = "#f8fafc"; // T5 (Celestial/Neo)
+
+            if (state.mood === 'SLEEP') primary = "#64748b";
+
+            let eyeColor = "#4ade80";
+            if (state.mood === 'TIRED') eyeColor = "#fbbf24";
+            if (state.mood === 'GLITCH') eyeColor = "#ef4444";
+            if (state.mood === 'SLEEP') eyeColor = "#334155";
+
+            const isBlinking = (Math.sin(state.tick * 0.03) > 0.97) && (state.mood !== 'SLEEP');
+
+            // --- EVOLUTION TIER DRAWING ---
+            
+            if (state.lvl < 5) {
+                // T1: DRONE (Kotak)
+                ctx.fillStyle = primary; ctx.fillRect(x-20, y-20, 40, 40);
+                ctx.fillStyle = "#0f172a"; ctx.fillRect(x-16, y-16, 32, 22);
+                if (!isBlinking) {
+                    ctx.fillStyle = eyeColor;
+                    if (state.mood === 'HAPPY') {
+                        ctx.fillRect(x-12, y-10, 4, 2); ctx.fillRect(x-10, y-12, 4, 2);
+                        ctx.fillRect(x+4, y-12, 4, 2); ctx.fillRect(x+6, y-10, 4, 2);
+                    } else if (state.mood === 'SLEEP') {
+                        ctx.fillRect(x-12, y-8, 8, 2); ctx.fillRect(x+4, y-8, 8, 2);
+                    } else {
+                        ctx.fillRect(x-12, y-12, 8, 8); ctx.fillRect(x+4, y-12, 8, 8);
+                    }
+                }
+            } 
+            else if (state.lvl < 10) {
+                // T2: HOVER (Orb)
+                ctx.fillStyle = primary; ctx.beginPath(); ctx.arc(x, y, 22, 0, Math.PI*2); ctx.fill();
+                ctx.fillStyle = "#0f172a"; ctx.fillRect(x-14, y-12, 28, 16);
+                if (!isBlinking) {
+                    ctx.fillStyle = eyeColor;
+                    if (state.mood === 'SLEEP') { ctx.fillRect(x-10, y-6, 6, 2); ctx.fillRect(x+4, y-6, 6, 2); }
+                    else { ctx.fillRect(x-10, y-8, 6, 6); ctx.fillRect(x+4, y-8, 6, 6); }
+                }
+                ctx.fillStyle = "#475569"; ctx.fillRect(x-28, y-4, 8, 12); ctx.fillRect(x+20, y-4, 8, 12);
+            }
+            else if (state.lvl < 15) {
+                // T3: SENTINEL (Humanoid Basic)
+                ctx.fillStyle = primary; ctx.fillRect(x-15, y-25, 30, 25);
+                ctx.fillStyle = "#0f172a"; ctx.fillRect(x-12, y-22, 24, 12);
+                ctx.fillStyle = (state.mood === 'GLITCH') ? "#ef4444" : (state.mood === 'SLEEP' ? "#1e293b" : "#22d3ee");
+                if (!isBlinking) ctx.fillRect(x-10, y-19, 20, 4);
+                ctx.fillStyle = (state.mood === 'SLEEP') ? "#334155" : "#1e293b"; ctx.fillRect(x-25, y+2, 50, 15);
+                ctx.fillStyle = primary; ctx.fillRect(x-18, y+2, 36, 20);
+                if (state.mood !== 'SLEEP') {
+                    ctx.globalAlpha = 0.2; ctx.fillStyle = (state.mood === 'GLITCH') ? "#ef4444" : "#22d3ee";
+                    ctx.beginPath(); ctx.arc(x, y, 35 + Math.sin(state.tick*0.1)*5, 0, Math.PI*2); ctx.fill(); ctx.globalAlpha = 1.0;
+                }
+            }
+            else if (state.lvl < 20) {
+                // T4: QUANTUM EXPLORER (Humanist Astronaut)
+                // Head (Helm)
+                ctx.fillStyle = primary; ctx.fillRect(x-14, y-30, 28, 22);
+                ctx.fillStyle = "#0f172a"; ctx.fillRect(x-10, y-26, 20, 12);
+                ctx.fillStyle = eyeColor; if(!isBlinking) ctx.fillRect(x-6, y-22, 12, 4);
+                // Body
+                ctx.fillStyle = primary; ctx.fillRect(x-12, y-6, 24, 18);
+                // Floating Segments
+                const hOff = Math.sin(state.tick * 0.1) * 5;
+                ctx.fillStyle = primary;
+                ctx.fillRect(x-28, y + hOff, 10, 10); ctx.fillRect(x+18, y - hOff, 10, 10); // Shoulders
+                ctx.fillRect(x-10, y+16, 8, 12); ctx.fillRect(x+2, y+16, 8, 12); // Feet
+            }
+            else {
+                // T5: NEO-COMPANION (Advanced Humanoid)
+                // Wajah lebih humanist dan elegan
+                const pulse = Math.sin(state.tick * 0.1) * 2;
+                
+                // Hair/Energy Halo (Soft Glow)
+                if (state.mood !== 'SLEEP') {
+                    ctx.globalAlpha = 0.2;
+                    ctx.fillStyle = "#22d3ee";
+                    ctx.beginPath(); ctx.arc(x, y-28, 20 + pulse, 0, Math.PI, true); ctx.fill();
+                    ctx.globalAlpha = 1.0;
+                }
+
+                // Head (Sleek Shape)
+                ctx.fillStyle = primary; 
+                ctx.beginPath(); ctx.roundRect(x-15, y-35, 30, 24, 8); ctx.fill();
+                
+                // Screen Face (Expressive)
+                ctx.fillStyle = "#0f172a";
+                ctx.beginPath(); ctx.roundRect(x-12, y-32, 24, 16, 4); ctx.fill();
+                
+                // Expressive Large Eyes
+                if (!isBlinking) {
+                    ctx.fillStyle = (state.mood === 'SLEEP') ? "#1e293b" : "#22d3ee";
+                    if (state.mood === 'HAPPY') {
+                        // ^ ^ Eyes
+                        ctx.fillRect(x-9, y-26, 4, 2); ctx.fillRect(x-7, y-28, 4, 2);
+                        ctx.fillRect(x+3, y-28, 4, 2); ctx.fillRect(x+5, y-26, 4, 2);
+                    } else {
+                        // Large Friendly Glowing Eyes
+                        ctx.fillRect(x-9, y-28, 6, 8); ctx.fillRect(x+3, y-28, 6, 8);
+                        ctx.fillStyle = "#ffffff"; ctx.fillRect(x-7, y-26, 2, 2); ctx.fillRect(x+5, y-26, 2, 2); // Reflections
+                    }
+                }
+
+                // Body (Sleek Humanoid Torso)
+                ctx.fillStyle = primary;
+                ctx.beginPath(); ctx.moveTo(x-12, y-8); ctx.lineTo(x+12, y-8); ctx.lineTo(x+8, y+15); ctx.lineTo(x-8, y+15); ctx.fill();
+                
+                // Glowing Core (The "Heart")
+                if (state.mood !== 'SLEEP') {
+                    ctx.fillStyle = "#22d3ee";
+                    ctx.beginPath(); ctx.arc(x, y+2, 3 + pulse, 0, Math.PI*2); ctx.fill();
+                }
+
+                // Elegant Floating Limbs (More structured)
+                ctx.fillStyle = primary;
+                // Arms
+                ctx.fillRect(x-22, y-4, 8, 12); ctx.fillRect(x+14, y-4, 8, 12);
+                // Legs/Boots
+                ctx.fillRect(x-10, y+18, 8, 15); ctx.fillRect(x+2, y+18, 8, 15);
+                
+                // Digital Wings / Cape (Particles)
+                if (state.mood !== 'SLEEP') {
+                    ctx.globalAlpha = 0.4;
+                    for(let i=0; i<3; i++) {
+                        ctx.fillRect(x-25 - (i*5), y-20 + (i*10) + Math.sin(state.tick*0.05 + i)*5, 4, 4);
+                        ctx.fillRect(x+21 + (i*5), y-20 + (i*10) + Math.sin(state.tick*0.05 + i)*5, 4, 4);
+                    }
+                    ctx.globalAlpha = 1.0;
+                }
+            }
+        }
+
+        // --- MAIN LOOP ---
+        function updateLoop() {
+            state.tick++;
+            state.pwr = Math.max(0, state.pwr - 0.015);
+            state.hap = Math.max(0, state.hap - 0.01);
+
+            const canvasEl = document.getElementById('gameCanvas');
+            const statusEl = document.getElementById('status-display');
+            const tierEl = document.getElementById('ai-tier');
+
+            if (state.pwr <= 0) {
+                state.mood = 'SLEEP'; canvasEl.classList.remove('glitch-active');
+                statusEl.innerText = "SISTEM: POWER DOWN"; statusEl.className = "text-red-500";
+            } else if (state.pwr < 15) {
+                state.mood = 'GLITCH'; canvasEl.classList.add('glitch-active');
+                statusEl.innerText = "SISTEM: CRITICAL"; statusEl.className = "text-red-400";
+                if (state.tick % 200 === 0) showDialogue("SISTEM KRITIS! RECHARGE SEGERA!");
+            } else if (state.pwr < 35 || state.hap < 35) {
+                state.mood = 'TIRED'; canvasEl.classList.remove('glitch-active');
+                statusEl.innerText = "SISTEM: LOW POWER"; statusEl.className = "text-slate-400";
+            } else if (state.hap > 85) {
+                state.mood = 'HAPPY'; canvasEl.classList.remove('glitch-active');
+                statusEl.innerText = "SISTEM: OPTIMAL"; statusEl.className = "text-green-400";
+            } else {
+                state.mood = 'IDLE'; canvasEl.classList.remove('glitch-active');
+                statusEl.innerText = "SISTEM: ONLINE"; statusEl.className = "text-slate-400";
+            }
+
+            if (state.pwr > 70 && state.hap > 70) {
+                state.xp += 0.06;
+                if (state.xp >= 100) {
+                    state.xp = 0; state.lvl++; state.coins += 50; 
+                    showToast("LEVEL UP! +50 $UC");
+                    showDialogue(`EVOLUSI KE LEVEL ${state.lvl}!`);
+                    saveGame();
+                }
+            }
+
+            document.getElementById('pwr-bar').style.width = `${state.pwr}%`;
+            document.getElementById('pwr-val').innerText = `${Math.ceil(state.pwr)}%`;
+            document.getElementById('hap-bar').style.width = `${state.hap}%`;
+            document.getElementById('hap-val').innerText = `${Math.ceil(state.hap)}%`;
+            document.getElementById('xp-bar').style.width = `${state.xp}%`;
+            document.getElementById('lvl-text').innerText = `LVL ${state.lvl}`;
+            document.getElementById('coin-count').innerText = Math.floor(state.coins);
+            
+            let tier = "T1: DRONE";
+            if(state.lvl >= 5) { tier = "T2: HOVER"; tierEl.style.backgroundColor = "#8b5cf6"; }
+            if(state.lvl >= 10) { tier = "T3: SENTINEL"; tierEl.style.backgroundColor = "#06b6d4"; }
+            if(state.lvl >= 15) { tier = "T4: EXPLORER"; tierEl.style.backgroundColor = "#f59e0b"; }
+            if(state.lvl >= 20) { tier = "T5: COMPANION"; tierEl.style.backgroundColor = "#f8fafc"; tierEl.style.color = "#000"; }
+            tierEl.innerText = tier;
+
+            if (state.tick % 1000 === 0) saveGame();
+            drawPixelBot();
+            requestAnimationFrame(updateLoop);
+        }
+
+        window.onload = loadGame;
+
+    </script>
+</body>
+</html>
