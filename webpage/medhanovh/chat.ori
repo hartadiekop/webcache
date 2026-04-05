@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Azalia AI - Medical Consultation</title>
+    <title>Ayra AI - Medical Consultation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -41,7 +41,7 @@
             <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold shadow-lg shadow-blue-500/20">A</div>
                 <div>
-                    <h1 class="font-bold text-lg leading-none">Azalia <span class="text-xs font-medium text-cyan-400 ml-2">v0.1.0</span></h1>
+                    <h1 class="font-bold text-lg leading-none">Ayra <span class="text-xs font-medium text-cyan-400 ml-2">v0.1.0</span></h1>
                     <p class="text-xs text-slate-400">Medical AI Framework</p>
                 </div>
             </div>
@@ -51,13 +51,13 @@
         <div id="chat-history" class="chat-container overflow-y-auto space-y-4 mb-4 pr-2">
             <div class="flex justify-start">
                 <div class="max-w-[85%] glass p-4 rounded-2xl rounded-tl-none border border-slate-800 text-slate-200 text-sm leading-relaxed">
-                    Halo Dokter, saya <b>Azalia</b>. Bagaimana saya bisa membantu asistensi klinis Anda hari ini?
+                    Halo Dokter, saya <b>Ayra</b>. Bagaimana saya bisa membantu asistensi klinis Anda hari ini?
                 </div>
             </div>
         </div>
 
         <div class="relative">
-            <div id="loading" class="hidden absolute -top-8 left-4 text-xs text-cyan-400 animate-pulse">Azalia sedang menganalisis literatur medis...</div>
+            <div id="loading" class="hidden absolute -top-8 left-4 text-xs text-cyan-400 animate-pulse">Ayra sedang menganalisis literatur medis...</div>
             <div class="glass p-2 rounded-2xl border border-slate-800 flex items-center space-x-2 focus-within:border-blue-500/50 transition-all">
                 <input id="user-input" type="text" placeholder="Tanyakan kasus klinis, dosis, atau jurnal..." class="bg-transparent flex-1 p-3 outline-none text-sm">
                 <button id="send-btn" class="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-xl hover:scale-105 transition active:scale-95">
@@ -74,8 +74,8 @@
         const loading = document.getElementById('loading');
 
         // User ID Persistent (Sesuai diskusi UUID v4 sebelumnya)
-        let userId = localStorage.getItem('azalia_uid') || crypto.randomUUID();
-        localStorage.setItem('azalia_uid', userId);
+        let userId = localStorage.getItem('ayra_uid') || crypto.randomUUID();
+        localStorage.setItem('ayra_uid', userId);
 
         async function sendMessage() {
             const message = userInput.value.trim();
@@ -86,7 +86,7 @@
             loading.classList.remove('hidden');
 
             try {
-                const response = await fetch('https://apivan.han.ovh/webhook/azalia-332293f6-96a8-45ff-aaf9-890c18ad07cc', {
+                const response = await fetch('https://apivan.han.ovh/webhook/ayra-332293f6-96a8-45ff-aaf9-890c18ad07cc', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message, userId })
@@ -169,7 +169,7 @@ function closePanel() {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Azalia AI - Medical Consultation</title>
+    <title>Ayra AI - Medical Consultation</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
@@ -209,7 +209,7 @@ function closePanel() {
         <header class="flex-none flex items-center justify-between mb-6 glass p-4 rounded-2xl border border-slate-800"> <div class="flex items-center space-x-3">
                 <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center font-bold shadow-lg shadow-blue-500/20">A</div>
                 <div>
-                    <h1 class="font-bold text-lg leading-none">Azalia <span class="text-xs font-medium text-cyan-400 ml-2">v0.1.0</span></h1>
+                    <h1 class="font-bold text-lg leading-none">Ayra <span class="text-xs font-medium text-cyan-400 ml-2">v0.1.0</span></h1>
                     <p class="text-xs text-slate-400">Medical AI Framework</p>
                 </div>
             </div>
@@ -219,12 +219,12 @@ function closePanel() {
         <div id="chat-history" class="chat-container flex-1 overflow-y-auto space-y-4 mb-4 pr-2">
             <div class="flex justify-start">
                 <div class="max-w-[85%] glass p-4 rounded-2xl rounded-tl-none border border-slate-800 text-slate-200 text-sm leading-relaxed">
-                    Halo Dokter, saya <b>Azalia</b>. Bagaimana saya bisa membantu asistensi klinis Anda hari ini?
+                    Halo Dokter, saya <b>Ayra</b>. Bagaimana saya bisa membantu asistensi klinis Anda hari ini?
                 </div>
             </div>
         </div>
 
-        <div class="flex-none relative pb-2 md:pb-0"> <div id="loading" class="hidden absolute -top-8 left-4 text-xs text-cyan-400 animate-pulse">Azalia sedang menganalisis literatur medis...</div>
+        <div class="flex-none relative pb-2 md:pb-0"> <div id="loading" class="hidden absolute -top-8 left-4 text-xs text-cyan-400 animate-pulse">Ayra sedang menganalisis literatur medis...</div>
             <div class="glass p-2 rounded-2xl border border-slate-800 flex items-center space-x-2 focus-within:border-blue-500/50 transition-all">
                 <input id="user-input" type="text" placeholder="Tanyakan kasus klinis, dosis, atau jurnal..." class="bg-transparent flex-1 p-3 outline-none text-sm">
                 <button id="send-btn" class="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-xl hover:scale-105 transition active:scale-95">
@@ -241,9 +241,9 @@ function closePanel() {
         const loading = document.getElementById('loading');
 
         // User ID Persistent (Sesuai diskusi UUID v4 sebelumnya)
-        // let userId = localStorage.getItem('azalia_uid') || crypto.randomUUID();
+        // let userId = localStorage.getItem('ayra_uid') || crypto.randomUUID();
         let userId = crypto.randomUUID();
-        localStorage.setItem('azalia_uid', userId);
+        localStorage.setItem('ayra_uid', userId);
 
         async function sendMessage() {
             const message = userInput.value.trim();
@@ -254,7 +254,7 @@ function closePanel() {
             loading.classList.remove('hidden');
 
             try {
-                const response = await fetch('https://apivan.han.ovh/webhook/azalia-332293f6-96a8-45ff-aaf9-890c18ad07cc', {
+                const response = await fetch('https://apivan.han.ovh/webhook/ayra-332293f6-96a8-45ff-aaf9-890c18ad07cc', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ message, userId })
