@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "ovh.han.social.twa",
+        "sha256_cert_fingerprints": ["9A:A9:A8:E2:96:F0:6E:35:F9:72:2D:4F:75:FF:25:3A:8A:A2:54:7B:62:6F:BC:1C:00:4C:3C:79:C7:B4:93:9F"]
+      }
+    }]
