@@ -3,6 +3,6 @@
       "target": {
         "namespace": "android_app",
         "package_name": "ovh.han.social.twa",
-        "sha256_cert_fingerprints": ["9A:A9:A8:E2:96:F0:6E:35:F9:72:2D:4F:75:FF:25:3A:8A:A2:54:7B:62:6F:BC:1C:00:4C:3C:79:C7:B4:93:9F"]
+        "sha256_cert_fingerprints": ["32:03:EC:DF:C5:B4:95:A1:EB:1B:3E:9A:2E:4C:AB:25:92:68:D5:15:5D:01:86:13:90:8D:DE:F3:82:E4:16:E3"]
       }
     }]
