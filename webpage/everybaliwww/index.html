@@ -10,6 +10,35 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			.os-button-wrap {
+				display: flex;
+				justify-content: center;
+				margin-top: 1.25rem;
+			}
+			.os-button {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 0.9rem 1.8rem;
+				border: 1px solid rgba(255,255,255,0.8);
+				border-radius: 999px;
+				color: #fff;
+				font-size: 1rem;
+				font-weight: 600;
+				letter-spacing: 0.06em;
+				text-transform: uppercase;
+				text-decoration: none;
+				background: rgba(255,255,255,0.02);
+				transition: background-color 0.2s ease, transform 0.2s ease, border-color 0.2s ease;
+			}
+			.os-button:hover,
+			.os-button:focus {
+				background: rgba(255,255,255,0.08);
+				border-color: rgba(255,255,255,1);
+				transform: translateY(-1px);
+			}
+		</style>
 	</head>
 	<body class="is-preload">
 		<div id="wrapper">
@@ -23,17 +52,9 @@
 						<h1>EveryBali</h1><h1>Bali Tourism SuperApp</h1>
 						<p>Everything for Tourist, Nomad & Expat living in Bali</p>
 						<p style="font-size:18pt">Choose your OS below ::</p>
-						<nav>
-							<ul>
-								<li><a href="https://everybali.vap.my.id/" class="icon brands fa-apple"><span class="label">iPhone</span></a></li>
-								<li><a href="https://everybali.vap.my.id/" class="icon brands fa-chrome"><span class="label">Chrome</span></a></li>
-							</ul>
-						</nav>
-						<br>
-						<small>Want to invest to EveryBali? <a href="/cdn-cgi/l/email-protection#2f4a594a5d564d4e434601414a5b58405d446f48424e4643014c4042105c5a4d454a4c5b1262405d4a0a1d1f664149405d424e5b4640410a1d1f4e4d405a5b0a1d1f6641594a5c5b424a415b094d404b56127f434a4e5c4a0a1d1f5c4a414b0a1d1f424a0a1d1f42405d4a0a1d1f464149400a1d1f4e4d405a5b0a1d1f6641594a5c5b424a415b0a1d1f46410a1d1f6a594a5d566d4e4346010a1d1f7b47465c0a1d1f465c0a1d1f42560a1d1f58474e5b5c4e5f5f0a1d1f415a424d4a5d010a1f6e78474e5b5c4e5f5f0a1d1f0a1c6e0a1d1f56405a5d0a1d1f58474e5b5c4e5f5f0a1d1f415a424d4a5d0a1d1f474a5d4a">Click here</a></small>
-					</header>
-
-				<!-- Footer -->
+							<div class="os-button-wrap">
+								<a href="https://app.everybali.com" class="os-button">Open EveryBali App</a>
+							</div>
 					<footer id="footer">
 						<span class="copyright">&copy; EveryBali SuperApp.</span>
 					</footer>
