@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Pemantauan Karbon Monoksida</title>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+			margin: 0;
+		}
+
+		body {
+			display: flex;
+			flex-direction: column;
+			height: 100vh;
+			height: 100dvh;
+			overflow: hidden;
+			font-family: Arial, sans-serif;
+			color: #17212b;
+			background: #f4f7f8;
+		}
+
+		header {
+			flex: 0 0 auto;
+			padding: 1rem clamp(1rem, 4vw, 3rem);
+			background: #fff;
+			border-bottom: 1px solid #d9e1e5;
+		}
+
+		h1 {
+			margin: 0 0 0.4rem;
+			font-size: clamp(1.2rem, 2.5vw, 1.75rem);
+			line-height: 1.2;
+		}
+
+		p {
+			max-width: 70rem;
+			margin: 0;
+			font-size: clamp(0.9rem, 1.5vw, 1rem);
+			line-height: 1.5;
+		}
+
+		iframe {
+			display: block;
+			flex: 1 1 auto;
+			width: 100%;
+			min-height: 0;
+			border: 0;
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Pemantauan Karbon Monoksida</h1>
+		<p>Halaman web ini memantau kadar karbon monoksida (CO) yang tinggi di Indonesia akibat kebakaran hutan.</p>
+	</header>
+	<iframe
+		src="https://eyes.nasa.gov/apps/earth/#/vital-signs/carbon-monoxide/airs-infrared-18000ft-3day"
+		title="Peta pemantauan karbon monoksida dari NASA"
+		allow="fullscreen"
+	></iframe>
+</body>
+</html>
